@@ -1,0 +1,5 @@
+density_class,locations,served,unserved,no_wired_100_20,has_fiber,two_plus_wired_100_20,pct_served,pct_unserved,pct_no_wired_100_20,pct_has_fiber,pct_two_plus_wired_100_20,tracts,median_income,pct_hh_broadband_median,pct_hh_broadband,pct_hh_wired_broadband,population
+Very rural (<50/sq mi),100755,81218,10219,20481,64669,29795,80.61,10.14,20.33,64.18,29.57,64,79948.0,88.12,88.58,71.0,167927.0
+Rural (50-200),111226,102417,3345,9513,67739,51445,92.08,3.01,8.55,60.9,46.25,69,81371.0,89.07,89.24,76.6,244034.0
+"Small town (200-1,000)",35569,35026,284,614,21683,21273,98.47,0.8,1.73,60.96,59.81,28,83761.5,90.655,92.25,81.71,103385.0
+"Urban (>1,000)",34827,34646,64,206,29259,29273,99.48,0.18,0.59,84.01,84.05,32,71636.5,91.795,90.2,78.72,131760.0

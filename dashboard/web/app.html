@@ -1,0 +1,820 @@
+<title>Vermont Broadband Atlas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Residential broadband availability, competition and adoption across Vermont's counties and towns. FCC Broadband Data Collection (Dec 2025) and U.S. Census ACS.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: night-mode data atlas. Sticky nav -> hero (title + live 3D hex Vermont) -> explorer (filters | map | snapshot)
+   -> findings cards -> priority communities -> county list + town directory -> deep dive -> method & data use. */
+:root {
+  color-scheme: dark;
+  --bg: #060a13;
+  --bg-2: #0a1120;
+  --panel: rgba(15, 24, 42, 0.78);
+  --panel-solid: #0f182a;
+  --panel-hi: rgba(26, 40, 68, 0.9);
+  --line: rgba(140, 175, 230, 0.14);
+  --line-hi: rgba(140, 190, 255, 0.32);
+  --ink: #e9eef7;
+  --ink-2: #aab6ca;
+  --muted: #6f7c93;
+  --cyan: #5fe1d3;
+  --violet: #8f86ff;
+  --glow: rgba(95, 225, 211, 0.35);
+  /* data: share below 100/20 (dark slate -> amber -> rose) */
+  --gap-0: #26343a; --gap-1: #4c513d; --gap-2: #a58a3f; --gap-3: #e3b341; --gap-4: #e2876b; --gap-5: #d65f86;
+  /* data: coverage (deep teal -> mint) */
+  --cov-0: #173238; --cov-1: #1e5355; --cov-2: #2b7b74; --cov-3: #3fa694; --cov-4: #6fd0b3; --cov-5: #b9f2dc;
+  --served: #5fae96; --under: #e3b341; --unserved: #d65f86;
+  --level-low: #5fae96; --level-mod: #e3b341; --level-high: #d65f86;
+  --font-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --r-lg: 18px; --r-md: 12px;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15.5px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 50; background: var(--bg); }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1240px; margin: 0 auto; }
+a { color: var(--cyan); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; border-radius: 6px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+.mono { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+.eyebrow { font: 500 12px/1.2 var(--font-data); letter-spacing: .24em; text-transform: uppercase; color: var(--cyan); }
+.section-title { font-family: var(--font-display); font-weight: 750; font-stretch: 105%; font-size: clamp(26px, 3.2vw, 36px); line-height: 1.08; letter-spacing: -.005em; }
+.lede { color: var(--ink-2); max-width: 62ch; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-lg); backdrop-filter: blur(10px); box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 30px 60px -40px rgba(0,0,0,.9); min-width: 0; }
+.btn { display: inline-flex; align-items: center; gap: 10px; font: 600 14px var(--font-body); padding: 12px 20px; border-radius: 999px; border: 1px solid var(--line-hi); color: var(--ink); background: rgba(20, 32, 56, .6); text-decoration: none; cursor: pointer; transition: transform .15s, border-color .15s, background .15s; }
+.btn:hover { border-color: var(--cyan); transform: translateY(-1px); }
+.btn.primary { background: linear-gradient(135deg, #63e6d6, #4cc3e8); color: #04201d; border-color: transparent; box-shadow: 0 8px 30px -8px var(--glow); }
+.btn svg { width: 16px; height: 16px; }
+
+/* ---------- nav ---------- */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; background: rgba(6, 10, 19, .78); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; gap: 24px; height: 62px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font: 700 14px var(--font-body); white-space: nowrap; }
+.brand .mark { width: 34px; height: 34px; }
+.nav ul { display: flex; gap: 4px; list-style: none; margin: 0 auto; padding: 0; }
+.nav ul a { display: block; padding: 8px 12px; border-radius: 8px; color: var(--ink-2); text-decoration: none; font-size: 13.5px; }
+.nav ul a:hover { color: var(--ink); background: rgba(255,255,255,.04); }
+.nav .gh { padding: 8px 14px; font-size: 13px; }
+@media (max-width: 980px) { .nav ul { display: none; } .nav .gh { margin-left: auto; } }
+
+/* ---------- hero ---------- */
+.hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+.hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(900px 500px at 78% 30%, rgba(80, 120, 255, .18), transparent 60%),
+    radial-gradient(700px 400px at 20% 0%, rgba(95, 225, 211, .10), transparent 60%),
+    linear-gradient(180deg, #070c18 0%, #060a13 100%); }
+.hero-bg svg { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 46%; }
+.hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 24px; align-items: center; padding-block: 56px 48px; }
+.hero h1 { font-family: var(--font-display); font-weight: 850; font-stretch: 122%; text-transform: uppercase; font-size: clamp(38px, 5.6vw, 76px); line-height: .94; letter-spacing: -.01em; margin-top: 18px;
+  background: linear-gradient(100deg, #8ff5e6 0%, #8ab8ff 45%, #a59bff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero .sub { margin-top: 20px; font-size: 18px; color: var(--ink-2); max-width: 46ch; }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 36px; }
+.kpi { padding: 14px; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 4px 10px; align-items: center; }
+.kpi .ic { grid-row: span 2; width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; background: rgba(95,225,211,.08); border: 1px solid rgba(95,225,211,.2); color: var(--cyan); }
+.kpi .ic svg { width: 18px; height: 18px; }
+.kpi .v { font-family: var(--font-display); font-weight: 750; font-stretch: 100%; font-size: clamp(20px, 1.75vw, 25px); line-height: 1; white-space: nowrap; }
+.kpi .l { font-size: 12.5px; color: var(--ink-2); line-height: 1.3; }
+.hero-visual { position: relative; height: min(620px, 72vh); min-height: 420px; }
+#hero-map { position: absolute; inset: -30px -60px -30px -20px; }
+.hero-visual .vtext { position: absolute; right: 0; top: 24%; writing-mode: vertical-rl; font: 500 11px var(--font-data); letter-spacing: .3em; color: var(--muted); text-transform: uppercase; }
+.hero-visual .scale { position: absolute; left: 8%; bottom: 6%; display: grid; gap: 6px; font: 11px var(--font-data); color: var(--ink-2); }
+.hero-visual .scale .bar { width: 180px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--gap-0), var(--gap-2), var(--gap-3), var(--gap-4), var(--gap-5)); }
+.hero-visual .scale .ends { display: flex; justify-content: space-between; color: var(--muted); }
+@media (max-width: 980px) { .hero .wrap { grid-template-columns: 1fr; } .hero-visual { height: 400px; order: -1; margin-bottom: -30px; } .hero-visual .vtext { display: none; } #hero-map { inset: -20px -16px; } .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- section scaffolding ---------- */
+section.sec { padding-block: 72px 8px; }
+.sec-head { display: grid; gap: 12px; margin-bottom: 28px; }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--line-hi), transparent); margin-top: 72px; }
+
+/* ---------- explorer ---------- */
+.explore { display: grid; grid-template-columns: 290px minmax(0, 1fr) 320px; gap: 16px; align-items: stretch; }
+.filters { padding: 18px; display: grid; gap: 16px; align-content: start; }
+.field { display: grid; gap: 6px; }
+.field label { font: 500 11px var(--font-data); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+select, input[type="search"] {
+  width: 100%; font: 500 14px var(--font-body); color: var(--ink); background: var(--panel-solid); border: 1px solid var(--line-hi);
+  border-radius: 10px; padding: 10px 12px; appearance: none;
+}
+select { background-image: linear-gradient(45deg, transparent 50%, var(--ink-2) 50%), linear-gradient(135deg, var(--ink-2) 50%, transparent 50%); background-position: calc(100% - 17px) 18px, calc(100% - 12px) 18px; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 32px; }
+select:focus, input[type="search"]:focus { outline: 2px solid var(--cyan); outline-offset: 1px; }
+.town-results { display: grid; gap: 2px; max-height: 190px; overflow-y: auto; }
+.town-results button { all: unset; cursor: pointer; display: flex; justify-content: space-between; gap: 8px; padding: 7px 10px; border-radius: 8px; font-size: 13.5px; }
+.town-results button:hover, .town-results button:focus-visible { background: rgba(95,225,211,.08); outline: none; }
+.town-results button span:last-child { color: var(--muted); font-size: 12px; }
+.town-card { border: 1px solid rgba(95,225,211,.28); background: rgba(95,225,211,.06); border-radius: 12px; padding: 12px; font-size: 13.5px; }
+.town-card b { font-size: 15px; }
+.town-card .note { color: var(--under); font-size: 12.5px; margin-top: 6px; }
+.toggles { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 500 12.5px var(--font-body); padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line-hi); background: transparent; color: var(--ink-2); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.reset { all: unset; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; font-size: 13px; color: var(--ink-2); padding-top: 8px; border-top: 1px solid var(--line); }
+.reset:hover { color: var(--ink); }
+.mapbox { position: relative; overflow: hidden; min-height: 640px; background: radial-gradient(600px 500px at 50% 40%, #0e1a30, #070c17); }
+#map { position: absolute; inset: 0; }
+.map-legend { position: absolute; right: 14px; bottom: 14px; z-index: 2; padding: 12px 14px; width: 240px; display: grid; gap: 6px; }
+.map-legend .t { font-size: 12.5px; color: var(--ink); }
+.map-legend .bar { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; height: 9px; }
+.map-legend .bar span:first-child { border-radius: 3px 0 0 3px; } .map-legend .bar span:last-child { border-radius: 0 3px 3px 0; }
+.map-legend .ends { display: flex; justify-content: space-between; font: 11px var(--font-data); color: var(--muted); }
+.map-legend .h { font-size: 11.5px; color: var(--muted); }
+.map-tag { position: absolute; left: 14px; top: 14px; z-index: 2; padding: 8px 12px; font-size: 13px; display: flex; gap: 8px; align-items: center; }
+.map-tag b { font-weight: 650; }
+.map-tag button { all: unset; cursor: pointer; color: var(--cyan); font-size: 12.5px; }
+.map-fallback { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; color: var(--ink-2); }
+.snapshot { padding: 18px; display: grid; gap: 18px; align-content: start; }
+.snapshot h3 { font-family: var(--font-display); font-size: 22px; font-weight: 750; font-stretch: 108%; }
+.snapshot .k { font: 500 11px var(--font-data); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.big { font-family: var(--font-display); font-weight: 780; font-stretch: 110%; font-size: 34px; line-height: 1; }
+.tierbar { display: flex; gap: 2px; height: 12px; }
+.tierbar span { border-radius: 3px; min-width: 3px; }
+.legend-row { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 12.5px; color: var(--ink-2); }
+.legend-row i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.legend-row b { color: var(--ink); font-weight: 600; font-family: var(--font-data); font-size: 12px; margin-left: 4px; }
+.donut-row { display: grid; grid-template-columns: 96px 1fr; gap: 14px; align-items: center; }
+.donut-row svg { width: 96px; height: 96px; }
+.donut-legend { display: grid; gap: 6px; font-size: 12.5px; color: var(--ink-2); }
+.donut-legend b { font-family: var(--font-data); color: var(--ink); font-size: 12.5px; display: inline-block; min-width: 46px; }
+.minibars { display: grid; gap: 8px; }
+.minibar { display: grid; grid-template-columns: 110px minmax(0,1fr) 46px; gap: 10px; align-items: center; font-size: 12.5px; color: var(--ink-2); }
+.minibar .tr { height: 6px; background: rgba(255,255,255,.06); border-radius: 3px; overflow: hidden; }
+.minibar .tr i { display: block; height: 100%; border-radius: 3px; background: var(--cov-4); }
+.minibar .v { font: 12px var(--font-data); color: var(--ink); text-align: right; }
+.towns-list { display: flex; flex-wrap: wrap; gap: 6px; max-height: 150px; overflow-y: auto; }
+.towns-list button { font: 12.5px var(--font-body); padding: 5px 9px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.03); color: var(--ink-2); cursor: pointer; }
+.towns-list button:hover { border-color: var(--cyan); color: var(--ink); }
+.towns-list .city { border-color: rgba(143,134,255,.45); }
+@media (max-width: 1180px) { .explore { grid-template-columns: 280px minmax(0, 1fr); } .snapshot { grid-column: 1 / -1; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); } }
+@media (max-width: 760px) { .explore { grid-template-columns: 1fr; } .mapbox { min-height: 540px; } .map-legend { width: auto; left: 12px; right: 12px; } }
+
+/* ---------- findings ---------- */
+.findings { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.6fr); gap: 32px; align-items: start; }
+.fcards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.fcard { padding: 18px; display: grid; gap: 10px; align-content: start; }
+.fcard .h { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--cyan); }
+.fcard .h svg { width: 16px; height: 16px; }
+.fcard .v { font-family: var(--font-display); font-weight: 780; font-stretch: 110%; font-size: 40px; line-height: 1; }
+.fcard p { font-size: 13.5px; color: var(--ink-2); }
+.meter { display: flex; gap: 2px; height: 8px; margin-top: 4px; }
+.meter span { border-radius: 2px; }
+.statement { grid-column: 1 / -1; padding: 22px 24px; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start; }
+.statement .q { font-family: var(--font-display); font-size: 48px; line-height: .8; color: var(--violet); }
+.statement p { font-size: 17px; color: var(--ink); max-width: 70ch; }
+.statement small { display: block; margin-top: 8px; font: 11px var(--font-data); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 980px) { .findings { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .fcards { grid-template-columns: 1fr; } }
+
+/* ---------- communities ---------- */
+.ccards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.ccard { padding: 18px; display: grid; gap: 14px; text-align: left; color: inherit; font: inherit; cursor: pointer; transition: border-color .15s, transform .15s; }
+.ccard:hover { border-color: var(--line-hi); transform: translateY(-2px); }
+.ccard .top { display: grid; grid-template-columns: auto 1fr 64px; gap: 10px; align-items: start; }
+.ccard .rank { font-family: var(--font-display); font-weight: 750; font-size: 24px; color: var(--cyan); line-height: 1; }
+.ccard .nm { font-weight: 650; font-size: 16px; }
+.badge { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; font: 600 11.5px var(--font-body); padding: 3px 9px; border-radius: 999px; border: 1px solid; }
+.badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid currentColor; }
+.badge.High { color: var(--level-high); border-color: color-mix(in srgb, var(--level-high) 50%, transparent); background: color-mix(in srgb, var(--level-high) 10%, transparent); }
+.badge.Medium { color: var(--level-mod); border-color: color-mix(in srgb, var(--level-mod) 50%, transparent); background: color-mix(in srgb, var(--level-mod) 10%, transparent); }
+.badge.Low { color: var(--level-low); border-color: color-mix(in srgb, var(--level-low) 50%, transparent); background: color-mix(in srgb, var(--level-low) 10%, transparent); }
+.ccard svg.shape { width: 64px; height: 64px; }
+.ind { display: grid; gap: 5px; }
+.ind .row { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--ink-2); }
+.ind .row b { font-weight: 500; font-size: 12px; }
+.ind .row b.Low { color: var(--level-low); } .ind .row b.Moderate { color: var(--level-mod); } .ind .row b.High { color: var(--level-high); }
+.ind .tr { height: 5px; border-radius: 3px; background: rgba(255,255,255,.06); overflow: hidden; }
+.ind .tr i { display: block; height: 100%; border-radius: 3px; }
+.ind small { font: 11px var(--font-data); color: var(--muted); }
+.need-note { margin-top: 14px; font-size: 13px; color: var(--muted); max-width: 90ch; }
+@media (max-width: 1080px) { .ccards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .ccards { grid-template-columns: 1fr; } }
+
+/* ---------- counties + towns ---------- */
+.ct-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.clist { padding: 18px 18px 10px; }
+.clist .legend-row { margin: 0 0 12px; }
+.crow { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 110px minmax(0, 1fr) 58px; gap: 14px; align-items: center; width: 100%; padding: 9px 10px; border-radius: 10px; border: 1px solid transparent; font-size: 14px; }
+.crow:hover { background: rgba(255,255,255,.03); }
+.crow[aria-pressed="true"] { border-color: #8ab8ff; background: rgba(138,184,255,.07); }
+.crow .tb { display: flex; gap: 2px; height: 12px; }
+.crow .tb span { border-radius: 3px; }
+.crow .pv { font: 13px var(--font-data); text-align: right; color: var(--ink); }
+.dir { padding: 18px; display: grid; gap: 12px; }
+.dir .scroll { max-height: 560px; overflow-y: auto; border-top: 1px solid var(--line); }
+.dir table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.dir th { position: sticky; top: 0; background: var(--panel-solid); font: 500 11px var(--font-data); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 8px 6px; }
+.dir td { padding: 7px 6px; border-bottom: 1px solid var(--line); }
+.dir td.r, .dir th.r { text-align: right; }
+.dir td button { all: unset; cursor: pointer; color: var(--ink); }
+.dir td button:hover { color: var(--cyan); text-decoration: underline; }
+.dir .letter td { font: 600 12px var(--font-data); color: var(--cyan); padding-top: 14px; border-bottom: 0; }
+@media (max-width: 900px) { .ct-grid { grid-template-columns: 1fr; } .crow { grid-template-columns: 92px minmax(0,1fr) 52px; } }
+
+/* ---------- deep dive ---------- */
+.dd { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.dd .panel { padding: 20px; }
+.dd h3 { font-size: 15.5px; font-weight: 650; }
+.dd .sub { font-size: 13px; color: var(--muted); margin: 4px 0 16px; }
+.dd .wide { grid-column: 1 / -1; }
+.hbars { display: grid; gap: 10px; }
+.hbar { display: grid; grid-template-columns: minmax(120px, 200px) minmax(0, 1fr) 60px; gap: 12px; align-items: center; font-size: 13.5px; }
+.hbar small { display: block; font-size: 11.5px; color: var(--muted); }
+.hbar .tr { height: 14px; }
+.hbar .tr i { display: block; height: 100%; border-radius: 0 4px 4px 0; }
+.hbar .v { font: 12.5px var(--font-data); text-align: right; color: var(--ink-2); }
+.tag { display: inline-block; font: 500 10px var(--font-data); letter-spacing: .06em; padding: 1px 6px; border-radius: 4px; border: 1px solid rgba(95,225,211,.4); color: var(--cyan); margin-left: 6px; vertical-align: 1px; }
+.scatter svg { width: 100%; height: auto; display: block; overflow: visible; }
+.scatter text { fill: var(--muted); font: 11px var(--font-data); }
+.scatter .at { fill: var(--ink-2); font: 12px var(--font-body); }
+.pairs .tr { height: auto; display: grid; gap: 3px; }
+.pairs .tr i { height: 8px; }
+.callout { font-size: 14.5px; color: var(--ink-2); max-width: 80ch; margin-top: 14px; }
+.callout b { color: var(--ink); }
+@media (max-width: 900px) { .dd { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .hbar { grid-template-columns: minmax(0, 1fr) 54px; } .hbar .tr { grid-column: 1 / -1; grid-row: 2; } }
+
+/* ---------- method ---------- */
+.method { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.method .panel { padding: 20px; font-size: 14px; color: var(--ink-2); }
+.method h3 { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px; display: flex; gap: 8px; align-items: center; }
+.method h3 svg { width: 16px; height: 16px; color: var(--cyan); }
+.method ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+@media (max-width: 980px) { .method { grid-template-columns: 1fr; } }
+footer { margin-top: 72px; border-top: 1px solid var(--line); padding-block: 26px 44px; font-size: 13px; color: var(--muted); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; }
+
+.tip { position: fixed; z-index: 60; pointer-events: none; background: #0b1426; border: 1px solid var(--line-hi); color: var(--ink); font-size: 12.5px; line-height: 1.45; padding: 9px 11px; border-radius: 10px; max-width: 280px; box-shadow: 0 12px 30px rgba(0,0,0,.5); }
+.tip b { font-weight: 650; }
+.tip .mono { font-size: 12px; }
+.tip .dim { color: var(--muted); }
+</style>
+
+<nav class="nav gutter" aria-label="Sections">
+  <div class="wrap">
+    <a class="brand" href="#overview">
+      <svg class="mark" viewBox="0 0 34 34" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8ff5e6"/><stop offset="1" stop-color="#a59bff"/></linearGradient></defs><path d="M17 2 30 9.5v15L17 32 4 24.5v-15z" fill="none" stroke="url(#g)" stroke-width="2"/><text x="17" y="21.5" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="800" font-size="11" fill="#e9eef7">VT</text></svg>
+      Broadband Atlas
+    </a>
+    <ul>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#explore">Explore</a></li>
+      <li><a href="#findings">Findings</a></li>
+      <li><a href="#communities">Communities</a></li>
+      <li><a href="#counties">Counties &amp; towns</a></li>
+      <li><a href="#method">Method</a></li>
+    </ul>
+    <a class="btn gh" href="https://github.com/kathyselmani/vermont-broadband-analysis" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      View on GitHub
+    </a>
+  </div>
+</nav>
+
+<header class="hero gutter" id="overview">
+  <div class="hero-bg" aria-hidden="true"><svg id="ridges" viewBox="0 0 1600 400" preserveAspectRatio="none"></svg></div>
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Vermont · data as of Dec 31, 2025</div>
+      <h1>Broadband access &amp; digital divide</h1>
+      <p class="sub">Exploring public data. Finding gaps. Mapping where Vermont homes can get fast internet, and where they can't.</p>
+      <div class="ctas">
+        <a class="btn primary" href="#explore">Explore the map <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <a class="btn" href="#explore" id="cta-town"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg> Find your town</a>
+      </div>
+      <div class="kpis" id="kpis"></div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div id="hero-map"></div>
+      <div class="vtext">14 counties · 256 towns · 21,033 hexagons</div>
+      <div class="scale"><span>Share of locations below 100/20 Mbps</span><div class="bar"></div><div class="ends"><span>0%</span><span>100%</span></div></div>
+    </div>
+  </div>
+</header>
+
+<main class="gutter">
+<div class="wrap">
+
+  <section class="sec" id="explore" aria-labelledby="explore-title">
+    <div class="sec-head">
+      <div class="eyebrow">Explore the data</div>
+      <h2 class="section-title" id="explore-title">Where is broadband available in Vermont?</h2>
+      <p class="lede">Pick a measure, isolate a county, or search for a town to see which county it belongs to. Each hexagon covers about 0.7 km²; its height shows how many homes and businesses are there.</p>
+    </div>
+    <div class="explore">
+      <div class="panel filters">
+        <div class="field">
+          <label for="f-metric">Measure</label>
+          <select id="f-metric">
+            <option value="pct_below_100_20">Below 100/20 Mbps</option>
+            <option value="pct_unserved">Unserved (below 25/3)</option>
+            <option value="pct_no_wired_100_20">No wired 100/20 option</option>
+            <option value="pct_has_fiber">Fiber available</option>
+            <option value="pct_two_plus_wired_100_20">2+ wired providers</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-county">County</label>
+          <select id="f-county"><option value="">All counties</option></select>
+        </div>
+        <div class="field">
+          <label for="f-town">Find a town</label>
+          <input type="search" id="f-town" placeholder="e.g. Essex, Stowe, Brattleboro" autocomplete="off" aria-describedby="town-hint" aria-controls="town-results">
+          <div id="town-hint" class="mono" style="font-size:11px;color:var(--muted)">256 towns, cities, gores and grants</div>
+          <div class="town-results" id="town-results" role="listbox" aria-label="Matching towns"></div>
+          <div class="town-card" id="town-card" hidden aria-live="polite"></div>
+        </div>
+        <div class="field">
+          <label>View</label>
+          <div class="toggles">
+            <button type="button" class="chip" id="t-3d" aria-pressed="true">3D</button>
+            <button type="button" class="chip" id="t-labels" aria-pressed="true">Town labels</button>
+          </div>
+        </div>
+        <button type="button" class="reset" id="f-reset"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2.5 8a5.5 5.5 0 1 0 1.6-3.9M2.5 2.5v3h3"/></svg>Reset filters</button>
+      </div>
+
+      <div class="panel mapbox">
+        <div id="map" role="img" aria-label="3D hexagon map of Vermont. Color shows the selected measure; height shows the number of locations."></div>
+        <div class="map-fallback" id="map-fallback" hidden>The 3D map needs WebGL, which is turned off in this browser. The county list below shows the same measures.</div>
+        <div class="panel map-tag" id="map-tag" hidden></div>
+        <div class="panel map-legend">
+          <div class="t" id="legend-title">Share of locations below 100/20 Mbps</div>
+          <div class="bar" id="legend-bar"></div>
+          <div class="ends"><span>0%</span><span>100%</span></div>
+          <div class="h">Height: number of locations. Hexagons with fewer than 5 locations show their surrounding area.</div>
+        </div>
+      </div>
+
+      <aside class="panel snapshot" id="snapshot" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="sec" id="findings" aria-labelledby="findings-title">
+    <div class="findings">
+      <div class="sec-head" style="margin:0">
+        <div class="eyebrow">Key findings</div>
+        <h2 class="section-title" id="findings-title">The infrastructure is mostly there. Choice and adoption lag.</h2>
+        <p class="lede">Nine in ten Vermont homes can order 100/20 Mbps service. But most have one wired provider or none, rural areas still have real gaps, and lower-income areas subscribe less even where service exists.</p>
+        <div style="margin-top:10px"><a class="btn" href="#deep-dive">Explore all findings <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+      </div>
+      <div class="fcards" id="fcards"></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="sec" id="communities" aria-labelledby="comm-title">
+    <div class="sec-head">
+      <div class="eyebrow">Areas to watch</div>
+      <h2 class="section-title" id="comm-title">Counties with the greatest need</h2>
+      <p class="lede">Ranked by a simple index of four indicators: service gaps, lack of wired choice, households without a broadband subscription, and rurality. Select a county to see it on the map.</p>
+    </div>
+    <div class="ccards" id="ccards"></div>
+    <p class="need-note" id="need-note"></p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="sec" id="counties" aria-labelledby="counties-title">
+    <div class="sec-head">
+      <div class="eyebrow">Counties &amp; towns</div>
+      <h2 class="section-title" id="counties-title">Every county, and the towns inside it</h2>
+      <p class="lede">Counties sorted by the share of locations below 100/20 Mbps. Select one to isolate it on the map. Not sure which county a town is in? Use the directory.</p>
+    </div>
+    <div class="ct-grid">
+      <div class="panel clist">
+        <div class="legend-row"><span><i style="background:var(--served)"></i>Served ≥ 100/20</span><span><i style="background:var(--under)"></i>Underserved</span><span><i style="background:var(--unserved)"></i>Unserved &lt; 25/3</span></div>
+        <div id="county-rows"></div>
+      </div>
+      <div class="panel dir">
+        <div class="field"><label for="dir-filter">Town directory</label><input type="search" id="dir-filter" placeholder="Filter towns or counties"></div>
+        <div class="scroll"><table><thead><tr><th>Town</th><th>County</th><th class="r">Population</th></tr></thead><tbody id="dir-body"></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="sec" id="deep-dive" aria-labelledby="dd-title">
+    <div class="sec-head">
+      <div class="eyebrow">Deep dive</div>
+      <h2 class="section-title" id="dd-title">Technology, providers and people</h2>
+    </div>
+    <div class="dd">
+      <div class="panel"><h3>Residential locations reached, by technology</h3><div class="sub">Median advertised download / upload in Mbps. "Reliable" follows the federal BEAD definition.</div><div class="hbars" id="tech-bars"></div></div>
+      <div class="panel"><h3>Sole wired 100/20 provider, by brand</h3><div class="sub">Locations where this company is the only wired option at 100/20 Mbps</div><div class="hbars" id="sole-bars"></div></div>
+      <div class="panel scatter wide" id="dd-scatter" hidden></div>
+      <div class="panel" id="dd-density" hidden></div>
+      <div class="panel pairs" id="dd-income" hidden></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="sec" id="method" aria-labelledby="method-title">
+    <div class="sec-head">
+      <div class="eyebrow">Method &amp; data use</div>
+      <h2 class="section-title" id="method-title">How to read this, and what it does not show</h2>
+    </div>
+    <div class="method">
+      <div class="panel">
+        <h3><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 13V3m0 10h12M5 10V7m3 3V5m3 5V8"/></svg>Definitions</h3>
+        <ul>
+          <li><b>Served:</b> a reliable, low-latency offer of at least 100 Mbps down and 20 up.</li>
+          <li><b>Underserved:</b> best reliable offer between 25/3 and 100/20. <b>Unserved:</b> nothing reliable at 25/3.</li>
+          <li><b>Reliable</b> (federal BEAD rule): fiber, cable, DSL and licensed fixed wireless. Satellite and unlicensed wireless don't count.</li>
+          <li>Universe: 282,377 locations with at least one residential offer.</li>
+          <li>Need index: equal-weight average of four indicators, each scaled 0 (best county) to 1 (worst).</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5 7V5a3 3 0 0 1 6 0v2"/></svg>Privacy</h3>
+        <ul>
+          <li>No addresses, coordinates, household data or FCC location IDs appear on this page or in the published files.</li>
+          <li>The smallest unit shown is an H3 hexagon of about 0.7 km². Hexagons with fewer than 5 locations show no count, and their colors come from the surrounding area (about 5 km²).</li>
+          <li>Census figures are published estimates for whole tracts, counties and towns.</li>
+          <li>This page uses no cookies, analytics or tracking.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M10 6.2a2.4 2.4 0 1 0 0 3.6"/></svg>Sources &amp; licensing</h3>
+        <ul>
+          <li><b>Source data:</b> FCC Broadband Data Collection, fixed availability, Vermont, Dec 31, 2025. U.S. government work, not subject to copyright (17 U.S.C. §105).</li>
+          <li>U.S. Census Bureau: ACS 2020–2024 5-year estimates, 2024 Gazetteer, TIGERweb county outlines. Also U.S. government works.</li>
+          <li>The FCC location Fabric (owned by CostQuest) is not used or redistributed.</li>
+          <li>Provider names are used only to identify reported offers; no logos or trademarks are reproduced.</li>
+          <li>Software: deck.gl (MIT), h3-js (Apache 2.0), Google Fonts (SIL Open Font License).</li>
+        </ul>
+      </div>
+    </div>
+    <p class="callout">Availability is what providers report to the FCC. It is not measured speed, price or whether households subscribe. Relationships with income and density are tract-level associations, not causes.</p>
+  </section>
+</div>
+</main>
+
+<footer class="gutter"><div class="wrap">
+  <span>Vermont Broadband Access &amp; Digital Divide Analysis · Kathy Selmani</span>
+  <span>Source data: <a href="https://broadbandmap.fcc.gov/data-download/nationwide-data?version=dec2025" target="_blank" rel="noopener">FCC Broadband Data Collection</a> · <a href="https://www.census.gov/programs-surveys/acs" target="_blank" rel="noopener">U.S. Census Bureau</a></span>
+</div></footer>
+<div class="tip" id="tip" hidden></div>
+
+<script type="application/json" id="bundle">/*__DATA__*/</script>
+<script src="https://cdn.jsdelivr.net/npm/h3-js@4.1.0/dist/h3-js.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/deck.gl@9.0.41/dist.min.js"></script>
+<script>
+(() => {
+const D = JSON.parse(document.getElementById("bundle").textContent);
+const K = D.kpis;
+const $ = (id) => document.getElementById(id);
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const fmt = (n) => Math.round(n).toLocaleString("en-US");
+const pct = (n, d = 1) => `${Number(n).toFixed(d)}%`;
+const compact = (n) => n >= 1000 ? `${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}K` : String(Math.round(n));
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const hexRgb = (h) => { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
+
+/* ---------- lookups ---------- */
+const COUNTY = Object.fromEntries(D.counties.map((c) => [c.county_fips, c]));
+const NEED = Object.fromEntries((D.need || []).map((n) => [n.county_fips, n]));
+const ACS = Object.fromEntries((D.county_acs || []).map((n) => [n.county_fips, n]));
+const TOWNS = D.towns.map(([name, kind, fips, pop, lat, lon]) => ({ name, kind, fips, pop, lat, lon }));
+const townsByCounty = {};
+TOWNS.forEach((t) => (townsByCounty[t.fips] ||= []).push(t));
+Object.values(townsByCounty).forEach((l) => l.sort((a, b) => b.pop - a.pop));
+const countyName = (f) => COUNTY[f]?.county_name ?? "";
+const cols = Object.fromEntries(D.hex_columns.map((c, i) => [c, i]));
+
+/* ---------- tooltip ---------- */
+const tip = $("tip");
+function showTip(html, x, y) { tip.innerHTML = html; tip.hidden = false; const r = tip.getBoundingClientRect(); tip.style.left = Math.min(innerWidth - r.width - 10, x + 14) + "px"; tip.style.top = Math.max(8, y - r.height - 12) + "px"; }
+function hideTip() { tip.hidden = true; }
+function bindTip(el, html) { el.addEventListener("pointermove", (e) => showTip(typeof html === "function" ? html() : html, e.clientX, e.clientY)); el.addEventListener("pointerleave", hideTip); }
+
+/* ---------- ramps ---------- */
+const METRICS = {
+  pct_below_100_20: { label: "Share of locations below 100/20 Mbps", ramp: "gap", short: "Below 100/20" },
+  pct_unserved: { label: "Share of locations unserved (below 25/3)", ramp: "gap", short: "Unserved" },
+  pct_no_wired_100_20: { label: "Share with no wired 100/20 option", ramp: "gap", short: "No wired option" },
+  pct_has_fiber: { label: "Share of locations with fiber available", ramp: "cov", short: "Fiber" },
+  pct_two_plus_wired_100_20: { label: "Share with 2+ wired 100/20 providers", ramp: "cov", short: "2+ wired" },
+};
+const RAMPS = { gap: [0, 1, 2, 3, 4, 5].map((i) => hexRgb(css(`--gap-${i}`))), cov: [0, 1, 2, 3, 4, 5].map((i) => hexRgb(css(`--cov-${i}`))) };
+function rampColor(kind, v) {
+  const r = RAMPS[kind]; const t = Math.max(0, Math.min(1, v / 100)) * (r.length - 1);
+  const i = Math.min(r.length - 2, Math.floor(t)); const f = t - i;
+  return [0, 1, 2].map((k) => Math.round(r[i][k] + (r[i + 1][k] - r[i][k]) * f));
+}
+
+/* ---------- hero ---------- */
+function ridges() {
+  const svg = $("ridges"); const layers = [
+    { y: 250, amp: 70, seed: 1, fill: "#0b1426", op: 1 },
+    { y: 300, amp: 60, seed: 2, fill: "#0a1222", op: 1 },
+    { y: 340, amp: 40, seed: 3, fill: "#070d19", op: 1 },
+  ];
+  const rnd = (s) => () => ((s = Math.sin(s * 9301 + 49297) * 233280) - Math.floor(s));
+  svg.innerHTML = layers.map((L) => {
+    const r = rnd(L.seed); let d = `M0 400 L0 ${L.y}`;
+    for (let x = 0; x <= 1600; x += 40) d += ` L${x} ${(L.y - r() * L.amp - Math.sin(x / 210 + L.seed) * L.amp * .5).toFixed(1)}`;
+    return `<path d="${d} L1600 400 Z" fill="${L.fill}" opacity="${L.op}"/>`;
+  }).join("") + `<rect width="1600" height="400" fill="url(#fog)"/><defs><linearGradient id="fog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#060a13" stop-opacity="0"/><stop offset="1" stop-color="#060a13" stop-opacity=".9"/></linearGradient></defs>`;
+}
+ridges();
+
+const tiles = [
+  [fmt(K.locations), "Residential locations", '<path d="M3 8.5 10 3l7 5.5V17H3z"/><path d="M8 17v-5h4v5"/>'],
+  [pct(K.pct_served), "Served at 100/20 Mbps", '<path d="M3 15h14M5 12l3-3 3 2 5-5"/>'],
+  [pct(K.pct_one_wired_100_20 + K.pct_no_wired_100_20), "One wired option or none", '<circle cx="6" cy="6" r="2.5"/><circle cx="14" cy="14" r="2.5"/><path d="M8 8l4 4"/>'],
+  [fmt(K.unserved), "Unserved locations", '<circle cx="10" cy="10" r="7"/><circle cx="10" cy="10" r="2.5"/>'],
+];
+$("kpis").innerHTML = tiles.map(([v, l, ic]) => `<div class="panel kpi"><div class="ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ic}</svg></div><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+
+const glOK = (() => { try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch { return false; } })();
+const libsOK = !!(window.deck && window.h3);
+
+// Hexagon geometry (shared)
+const HEX = libsOK ? D.hexes.map((r) => ({ r, poly: h3.cellToBoundary(r[0], true), fips: r[cols.county_fips], small: r[cols.small_cell] === 1, n: r[cols.locations] ?? 2.5 })) : [];
+
+function initHero() {
+  if (!libsOK || !glOK) return;
+  // Aggregate to res-7 pillars, inset so each column stands apart
+  const agg = new Map();
+  HEX.forEach((h) => { const p = h3.cellToParent(h.r[0], 7); const a = agg.get(p) || { n: 0, w: 0 }; a.n += h.n; a.w += h.n * h.r[cols.pct_below_100_20]; agg.set(p, a); });
+  const pillars = [...agg].map(([id, a]) => {
+    const c = h3.cellToLatLng(id); const b = h3.cellToBoundary(id, true);
+    return { poly: b.map(([x, y]) => [c[1] + (x - c[1]) * .78, c[0] + (y - c[0]) * .78]), n: a.n, v: a.w / a.n };
+  });
+  const w0 = $("hero-map").clientWidth; const vs = { longitude: -72.6, latitude: 43.98, zoom: w0 < 600 ? 6.35 : 6.95, pitch: 56, bearing: -20 };
+  const hero = new deck.Deck({
+    parent: $("hero-map"), controller: false, initialViewState: vs,
+    layers: [new deck.PolygonLayer({ id: "pillars", data: pillars, getPolygon: (d) => d.poly, extruded: true, stroked: false,
+      getElevation: (d) => Math.sqrt(d.n) * 520, getFillColor: (d) => rampColor("gap", d.v),
+      material: { ambient: .5, diffuse: .6, shininess: 40, specularColor: [90, 120, 160] } }),
+      new deck.PathLayer({ id: "hero-county", data: D.counties_geojson.features.flatMap((f) => f.geometry.coordinates.map((p) => p[0])), getPath: (d) => d, getColor: [140, 190, 255, 70], widthMinPixels: 1 })],
+  });
+  if (!reduced) {
+    let b = vs.bearing, dir = 1, visible = true;
+    new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe($("hero-map"));
+    const tick = () => { if (visible && !document.hidden) { b += .025 * dir; if (b > 6 || b < -34) dir *= -1; hero.setProps({ viewState: { ...vs, bearing: b } }); } requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  }
+}
+initHero();
+
+/* ---------- explorer state ---------- */
+let state = { metric: "pct_below_100_20", county: "", labels: true, threeD: true, town: null };
+const countySel = $("f-county");
+D.counties.slice().sort((a, b) => a.county_name.localeCompare(b.county_name)).forEach((c) => countySel.insertAdjacentHTML("beforeend", `<option value="${c.county_fips}">${esc(c.county_name)} County</option>`));
+
+const BOUNDS = {};
+D.counties_geojson.features.forEach((f) => {
+  let a = [180, 90, -180, -90];
+  f.geometry.coordinates.forEach((p) => p[0].forEach(([x, y]) => { a = [Math.min(a[0], x), Math.min(a[1], y), Math.max(a[2], x), Math.max(a[3], y)]; }));
+  BOUNDS[f.properties.county_fips] = a;
+});
+const VT_BOUNDS = [-73.44, 42.72, -71.46, 45.02];
+
+let map = null;
+// Statewide labels: largest places first, skipping any within ~11 km of one already shown
+const STATE_LABELS = [];
+TOWNS.slice().sort((a, b) => b.pop - a.pop).forEach((t) => { if (STATE_LABELS.length < (innerWidth < 600 ? 9 : 16) && t.pop >= 3500 && STATE_LABELS.every((u) => Math.hypot(u.lat - t.lat, (u.lon - t.lon) * .72) > .1)) STATE_LABELS.push(t); });
+function viewFor(bounds) {
+  const el = $("map"); const w = el.clientWidth || 800, h = el.clientHeight || 640;
+  const vp = new deck.WebMercatorViewport({ width: w, height: h });
+  const { longitude, latitude, zoom } = vp.fitBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]], { padding: Math.min(60, w / 8) });
+  return { longitude, latitude: latitude - (state.threeD ? (bounds[3] - bounds[1]) * .06 : 0), zoom: zoom + (state.threeD && w >= 600 ? .3 : 0), pitch: state.threeD ? 48 : 0, bearing: state.threeD ? -14 : 0, transitionDuration: reduced ? 0 : 900, transitionInterpolator: new deck.FlyToInterpolator() };
+}
+function mapLayers() {
+  const m = METRICS[state.metric]; const ci = cols[state.metric]; const sel = state.county;
+  const lines = D.counties_geojson.features.flatMap((f) => f.geometry.coordinates.map((p) => ({ path: p[0], fips: f.properties.county_fips })));
+  const towns = (sel ? townsByCounty[sel] : STATE_LABELS) || [];
+  const L = [
+    new deck.PolygonLayer({
+      id: "hex", data: HEX, getPolygon: (d) => d.poly, extruded: state.threeD, stroked: false, pickable: true, autoHighlight: true, highlightColor: [255, 255, 255, 90],
+      getElevation: (d) => (sel && d.fips !== sel ? 0 : Math.sqrt(d.n) * 340),
+      getFillColor: (d) => { const c = rampColor(m.ramp, d.r[ci]); return sel && d.fips !== sel ? [...c, 45] : [...c, 235]; },
+      material: { ambient: .55, diffuse: .55, shininess: 30, specularColor: [60, 70, 90] },
+      updateTriggers: { getFillColor: [state.metric, sel], getElevation: [sel] },
+      transitions: reduced ? {} : { getElevation: 500 },
+    }),
+    new deck.PathLayer({ id: "county-lines", data: lines, getPath: (d) => d.path, getColor: (d) => (d.fips === sel ? [138, 184, 255, 255] : [190, 210, 240, 90]), getWidth: (d) => (d.fips === sel ? 2.5 : 1), widthUnits: "pixels", updateTriggers: { getColor: [sel], getWidth: [sel] } }),
+  ];
+  if (state.labels) {
+    L.push(new deck.ScatterplotLayer({ id: "town-dots", data: towns, getPosition: (t) => [t.lon, t.lat, 0], getRadius: 3, radiusUnits: "pixels", parameters: { depthCompare: "always" }, getFillColor: [233, 238, 247, 230], stroked: true, getLineColor: [6, 10, 19, 255], lineWidthUnits: "pixels", getLineWidth: 1.5 }));
+    L.push(new deck.TextLayer({ id: "town-labels", data: towns, getPosition: (t) => [t.lon, t.lat, 0], getText: (t) => t.name, getSize: sel ? 12 : 12.5, getColor: [233, 238, 247, 255], getPixelOffset: [0, -12], parameters: { depthCompare: "always" }, fontFamily: "Public Sans, system-ui, sans-serif", fontWeight: 600, fontSettings: { sdf: true }, outlineWidth: 3, outlineColor: [6, 10, 19, 230], characterSet: "auto", billboard: true }));
+  }
+  if (state.town) L.push(new deck.ScatterplotLayer({ id: "town-pin", data: [state.town], getPosition: (t) => [t.lon, t.lat, 0], getRadius: 9, radiusUnits: "pixels", filled: false, stroked: true, getLineColor: [95, 225, 211, 255], getLineWidth: 2.5, lineWidthUnits: "pixels" }));
+  return L;
+}
+function hexTip({ object }) {
+  if (!object) return null;
+  const r = object.r; const cn = countyName(object.fips);
+  const head = object.small ? `<b>${esc(cn)} County</b><br><span class="dim">Fewer than 5 locations. Values for the surrounding area:</span>` : `<b>${fmt(r[cols.locations])} locations</b> · ${esc(cn)} County`;
+  return { html: `${head}<br>Below 100/20: <span class="mono">${pct(r[cols.pct_below_100_20])}</span><br>Unserved: <span class="mono">${pct(r[cols.pct_unserved])}</span><br>Fiber available: <span class="mono">${pct(r[cols.pct_has_fiber])}</span><br>No wired 100/20: <span class="mono">${pct(r[cols.pct_no_wired_100_20])}</span>`, className: "tip", style: { position: "absolute", background: "#0b1426", color: "#e9eef7", border: "1px solid rgba(140,190,255,.32)", borderRadius: "10px", padding: "9px 11px", fontSize: "12.5px", maxWidth: "280px" } };
+}
+function initMap() {
+  if (!libsOK || !glOK) { $("map-fallback").hidden = false; if (!libsOK) $("map-fallback").textContent = "The map library didn't load. The county list below shows the same measures."; return; }
+  map = new deck.Deck({ parent: $("map"), initialViewState: viewFor(VT_BOUNDS), controller: { dragRotate: true, touchRotate: true }, layers: mapLayers(), getTooltip: hexTip,
+    onClick: ({ object }) => { if (object && object.fips) selectCounty(object.fips === state.county ? "" : object.fips, false); } });
+}
+initMap();
+
+function renderLegend() {
+  const m = METRICS[state.metric];
+  $("legend-title").textContent = m.label;
+  $("legend-bar").innerHTML = [0, 1, 2, 3, 4, 5].map((i) => `<span style="background:var(--${m.ramp}-${i})"></span>`).join("");
+}
+function refresh(fly) {
+  renderLegend(); renderSnapshot(); renderCountyRows();
+  const tag = $("map-tag");
+  if (state.county) { tag.hidden = false; tag.innerHTML = `<b>${esc(countyName(state.county))} County</b><button type="button" id="tag-clear">Show all</button>`; $("tag-clear").onclick = () => selectCounty(""); }
+  else tag.hidden = true;
+  if (map) { map.setProps({ layers: mapLayers() }); if (fly) map.setProps({ initialViewState: viewFor(state.county ? BOUNDS[state.county] : VT_BOUNDS) }); }
+}
+function selectCounty(fips, scroll = false) {
+  state.county = fips; countySel.value = fips; if (!fips) state.town = null;
+  refresh(true);
+  if (scroll) $("explore").scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+}
+$("f-metric").addEventListener("change", (e) => { state.metric = e.target.value; refresh(false); });
+countySel.addEventListener("change", (e) => { state.town = null; $("town-card").hidden = true; selectCounty(e.target.value); });
+$("t-3d").addEventListener("click", (e) => { state.threeD = !state.threeD; e.currentTarget.setAttribute("aria-pressed", state.threeD); refresh(true); });
+$("t-labels").addEventListener("click", (e) => { state.labels = !state.labels; e.currentTarget.setAttribute("aria-pressed", state.labels); refresh(false); });
+$("f-reset").addEventListener("click", () => {
+  state = { ...state, metric: "pct_below_100_20", county: "", town: null, labels: true, threeD: true };
+  $("f-metric").value = state.metric; $("f-town").value = ""; $("town-results").innerHTML = ""; $("town-card").hidden = true;
+  $("t-3d").setAttribute("aria-pressed", "true"); $("t-labels").setAttribute("aria-pressed", "true");
+  selectCounty("");
+});
+
+/* ---------- town search ---------- */
+const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[.'’]/g, "");
+function pickTown(t) {
+  state.town = t; $("f-town").value = t.name; $("town-results").innerHTML = "";
+  const cn = countyName(t.fips);
+  const clash = D.counties.find((c) => norm(c.county_name) === norm(t.name) && c.county_fips !== t.fips);
+  const kind = t.kind === "city" ? "city" : t.kind === "town" ? "town" : "unincorporated " + t.kind;
+  const card = $("town-card"); card.hidden = false;
+  card.innerHTML = `<b>${esc(t.name)}</b> is a ${kind} in <b>${esc(cn)} County</b>.<div class="mono" style="font-size:12px;color:var(--ink-2);margin-top:4px">Population ${fmt(t.pop)} (ACS 2020–2024)</div>` +
+    (clash ? `<div class="note">Not to be confused with ${esc(clash.county_name)} County, which is a different place.</div>` : "");
+  selectCounty(t.fips);
+}
+$("f-town").addEventListener("input", (e) => {
+  const q = norm(e.target.value.trim()); const box = $("town-results");
+  if (!q) { box.innerHTML = ""; return; }
+  const hits = TOWNS.filter((t) => norm(t.name).includes(q)).sort((a, b) => (norm(a.name).startsWith(q) ? 0 : 1) - (norm(b.name).startsWith(q) ? 0 : 1) || b.pop - a.pop).slice(0, 8);
+  box.innerHTML = hits.length ? hits.map((t, i) => `<button type="button" role="option" data-i="${TOWNS.indexOf(t)}" id="town-opt-${i}"><span>${esc(t.name)}</span><span>${esc(countyName(t.fips))} Co.</span></button>`).join("") : `<div style="font-size:13px;color:var(--muted);padding:6px 10px">No town matches "${esc(e.target.value)}".</div>`;
+});
+$("f-town").addEventListener("keydown", (e) => { if (e.key === "Enter") { const b = $("town-results").querySelector("button"); if (b) { e.preventDefault(); pickTown(TOWNS[+b.dataset.i]); } } if (e.key === "ArrowDown") { const b = $("town-results").querySelector("button"); if (b) { e.preventDefault(); b.focus(); } } });
+$("town-results").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) pickTown(TOWNS[+b.dataset.i]); });
+$("town-results").addEventListener("keydown", (e) => { const b = e.target.closest("button"); if (!b) return; if (e.key === "ArrowDown") { e.preventDefault(); (b.nextElementSibling || b).focus(); } if (e.key === "ArrowUp") { e.preventDefault(); (b.previousElementSibling || $("f-town")).focus(); } });
+$("cta-town").addEventListener("click", () => setTimeout(() => $("f-town").focus({ preventScroll: true }), reduced ? 0 : 500));
+
+/* ---------- snapshot ---------- */
+function donut(parts) {
+  const total = parts.reduce((s, p) => s + p.v, 0); let a = -Math.PI / 2; const R = 40, r = 27, cx = 48, cy = 48;
+  return `<svg viewBox="0 0 96 96" role="img" aria-label="${parts.map((p) => `${p.l}: ${pct(p.v / total * 100)}`).join(", ")}">` + parts.map((p) => {
+    const ang = (p.v / total) * Math.PI * 2; const gap = ang > .06 ? .03 : 0; const a0 = a + gap / 2, a1 = a + ang - gap / 2; a += ang;
+    const large = a1 - a0 > Math.PI ? 1 : 0; const P = (rad, t) => `${(cx + rad * Math.cos(t)).toFixed(2)} ${(cy + rad * Math.sin(t)).toFixed(2)}`;
+    return `<path d="M${P(R, a0)} A${R} ${R} 0 ${large} 1 ${P(R, a1)} L${P(r, a1)} A${r} ${r} 0 ${large} 0 ${P(r, a0)}Z" fill="${p.c}"/>`;
+  }).join("") + "</svg>";
+}
+function renderSnapshot() {
+  const c = state.county ? COUNTY[state.county] : { ...K, county_name: "Vermont" };
+  const ac = state.county ? ACS[state.county] : null; const nd = state.county ? NEED[state.county] : null;
+  const below = c.pct_underserved + c.pct_unserved;
+  const comp = [{ l: "No wired option", v: c.no_wired_100_20, c: "var(--unserved)" }, { l: "1 provider", v: c.one_wired_100_20, c: "var(--under)" }, { l: "2+ providers", v: c.two_plus_wired_100_20, c: "var(--served)" }];
+  const tech = [["Fiber", c.pct_has_fiber], ["Cable", c.pct_has_cable], ["DSL (copper)", c.pct_has_copper], ["Fixed wireless", c.pct_has_fixed_wireless], ["Wired gigabit", c.pct_has_gigabit_wired]];
+  const towns = state.county ? townsByCounty[state.county] : null;
+  $("snapshot").innerHTML = `
+    <div><div class="k">${state.county ? "County snapshot" : "Statewide snapshot"}</div><h3>${esc(c.county_name)}${state.county ? " County" : ""}</h3>
+      ${nd ? `<span class="badge ${nd.priority}">${nd.priority} priority · rank ${nd.need_rank} of 14</span>` : ""}</div>
+    <div><div class="k">Residential locations</div><div class="big">${fmt(c.locations)}</div>
+      <div class="mono" style="font-size:12px;color:var(--ink-2);margin-top:6px">${pct(below)} below 100/20 Mbps</div></div>
+    <div><div class="k">Service level</div><div class="tierbar"><span style="flex:${c.served};background:var(--served)"></span><span style="flex:${c.underserved};background:var(--under)"></span><span style="flex:${c.unserved};background:var(--unserved)"></span></div>
+      <div class="legend-row"><span><i style="background:var(--served)"></i>Served<b>${pct(c.pct_served)}</b></span><span><i style="background:var(--under)"></i>Under<b>${pct(c.pct_underserved)}</b></span><span><i style="background:var(--unserved)"></i>Unserved<b>${pct(c.pct_unserved)}</b></span></div></div>
+    <div><div class="k">Wired 100/20 providers</div><div class="donut-row">${donut(comp)}<div class="donut-legend">${comp.map((p) => `<span><i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${p.c};margin-right:6px"></i><b>${pct(p.v / c.locations * 100, 0)}</b>${p.l}</span>`).join("")}</div></div></div>
+    <div><div class="k">Technology available</div><div class="minibars">${tech.map(([l, v]) => `<div class="minibar"><span>${l}</span><div class="tr"><i style="width:${v}%"></i></div><span class="v">${pct(v, 0)}</span></div>`).join("")}</div></div>
+    ${ac ? `<div><div class="k">People (ACS)</div><div class="minibars"><div class="minibar"><span>Median income</span><span></span><span class="v">$${compact(ac.median_household_income)}</span></div><div class="minibar"><span>HH w/ broadband</span><div class="tr"><i style="width:${ac.pct_hh_broadband}%;background:var(--violet)"></i></div><span class="v">${pct(ac.pct_hh_broadband, 0)}</span></div></div></div>` : ""}
+    ${towns ? `<div><div class="k">Towns in ${esc(c.county_name)} County (${towns.length})</div><div class="towns-list">${towns.map((t) => `<button type="button" class="${t.kind === "city" ? "city" : ""}" data-t="${TOWNS.indexOf(t)}" title="Population ${fmt(t.pop)}">${esc(t.name)}</button>`).join("")}</div></div>`
+      : `<div><div class="k">Tip</div><p style="font-size:13px;color:var(--ink-2)">Select a county or a hexagon to see its numbers and the towns inside it.</p></div>`}`;
+  $("snapshot").querySelectorAll(".towns-list button").forEach((b) => b.addEventListener("click", () => pickTown(TOWNS[+b.dataset.t])));
+}
+
+/* ---------- findings ---------- */
+const below = K.pct_underserved + K.pct_unserved;
+const inc = D.by_income || [];
+const fc = [
+  { ic: '<path d="M2 12h12M4 9l3-3 2 2 4-4"/>', h: "Coverage", v: pct(K.pct_served), p: "of residential locations can order 100/20 Mbps from a reliable, low-latency technology.",
+    m: [[K.pct_served, "var(--served)"], [K.pct_underserved, "var(--under)"], [K.pct_unserved, "var(--unserved)"]] },
+  { ic: '<circle cx="5" cy="5" r="2"/><circle cx="11" cy="11" r="2"/><path d="M6.5 6.5l3 3"/>', h: "Limited competition", v: pct(K.pct_one_wired_100_20 + K.pct_no_wired_100_20), p: "have one wired 100/20 provider or none. Only 47% can choose between two or more.",
+    m: [[K.pct_no_wired_100_20, "var(--unserved)"], [K.pct_one_wired_100_20, "var(--under)"], [K.pct_two_plus_wired_100_20, "var(--served)"]] },
+  { ic: '<circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2"/>', h: "Rural gaps", v: pct(below), p: `of locations fall below 100/20 (${fmt(K.underserved + K.unserved)}). In very rural tracts it is ${D.by_density ? pct(100 - D.by_density[0].pct_served, 0) : "higher"}.`,
+    m: [[below, "var(--unserved)"], [100 - below, "rgba(255,255,255,.08)"]] },
+];
+$("fcards").innerHTML = fc.map((f) => `<div class="panel fcard"><div class="h"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">${f.ic}</svg>${f.h}</div><div class="v">${f.v}</div><p>${f.p}</p><div class="meter">${f.m.map(([w, c]) => `<span style="flex:${w};background:${c}"></span>`).join("")}</div></div>`).join("") +
+  (inc.length ? `<div class="panel statement"><div class="q" aria-hidden="true">“</div><div><p>Availability is not the same as adoption. In the lowest-income quartile of census tracts, ${pct(inc[0].pct_served, 0)} of locations can get 100/20 service, but only ${pct(inc[0].pct_hh_wired_broadband, 0)} of households subscribe to wired broadband. In the highest-income quartile it is ${pct(inc[3].pct_hh_wired_broadband, 0)}.</p><small>What the data says · FCC BDC and ACS 2020–2024</small></div></div>` : "");
+
+/* ---------- communities ---------- */
+function shapeSvg(fips, color) {
+  const f = D.counties_geojson.features.find((x) => x.properties.county_fips === fips); const b = BOUNDS[fips];
+  const k = Math.cos(((b[1] + b[3]) / 2) * Math.PI / 180); const w = (b[2] - b[0]) * k, h = b[3] - b[1]; const s = 56 / Math.max(w, h);
+  const ox = (64 - w * s) / 2, oy = (64 - h * s) / 2;
+  const d = f.geometry.coordinates.map((p) => "M" + p[0].map(([x, y]) => `${(ox + (x - b[0]) * k * s).toFixed(1)} ${(oy + (b[3] - y) * s).toFixed(1)}`).join("L") + "Z").join("");
+  return `<svg class="shape" viewBox="0 0 64 64" aria-hidden="true"><path d="${d}" fill="${color}" fill-opacity=".85" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg>`;
+}
+if (D.need) {
+  const levelColor = { Low: "var(--level-low)", Moderate: "var(--level-mod)", High: "var(--level-high)" };
+  const inds = [["gap", "Service gap", (n) => `${pct(n.pct_below_100_20)} below 100/20`], ["choice", "Lack of wired choice", (n) => `${pct(n.pct_no_wired_100_20)} no wired 100/20`], ["adoption", "Low adoption", (n) => `${pct(n.pct_hh_no_broadband)} of households unsubscribed`], ["rurality", "Rurality", (n) => `${fmt(n.pop_per_sqmi)} people / sq mi`]];
+  const prColor = { High: "var(--level-high)", Medium: "var(--level-mod)", Low: "var(--level-low)" };
+  $("ccards").innerHTML = D.need.slice(0, 4).map((n) => `
+    <button type="button" class="panel ccard" data-f="${n.county_fips}" aria-label="${esc(n.county_name)} County, ${n.priority} priority. Show on map">
+      <div class="top"><span class="rank">${String(n.need_rank).padStart(2, "0")}</span><div><div class="nm">${esc(n.county_name)} County</div><span class="badge ${n.priority}">${n.priority} priority</span></div>${shapeSvg(n.county_fips, prColor[n.priority])}</div>
+      ${inds.map(([k, l, val]) => `<div class="ind"><div class="row"><span>${l}</span><b class="${n["level_" + k]}">${n["level_" + k]}</b></div><div class="tr"><i style="width:${Math.max(4, n["need_" + k] * 100)}%;background:${levelColor[n["level_" + k]]}"></i></div><small>${val(n)}</small></div>`).join("")}
+    </button>`).join("");
+  $("ccards").querySelectorAll(".ccard").forEach((b) => b.addEventListener("click", () => selectCounty(b.dataset.f, true)));
+  $("need-note").textContent = `Index = average of the four indicators, each scaled from 0 (best county) to 1 (worst). High priority ≥ 0.60, Medium ≥ 0.35. Bars show the scaled value; labels split it into thirds. Next on the list: ${D.need.slice(4, 7).map((n) => `${n.county_name} (${n.priority.toLowerCase()})`).join(", ")}.`;
+}
+
+/* ---------- county rows ---------- */
+function renderCountyRows() {
+  const rows = D.counties.slice().sort((a, b) => b.pct_below_100_20 - a.pct_below_100_20);
+  $("county-rows").innerHTML = rows.map((c) => `<button type="button" class="crow" data-f="${c.county_fips}" aria-pressed="${c.county_fips === state.county}">
+    <span>${esc(c.county_name)}</span><span class="tb"><span style="flex:${c.served};background:var(--served)"></span><span style="flex:${c.underserved};background:var(--under)"></span><span style="flex:${c.unserved};background:var(--unserved)"></span></span><span class="pv">${pct(c.pct_below_100_20)}</span></button>`).join("");
+  $("county-rows").querySelectorAll(".crow").forEach((b) => {
+    const c = COUNTY[b.dataset.f];
+    bindTip(b, `<b>${esc(c.county_name)} County</b> · ${fmt(c.locations)} locations<br>Served: <span class="mono">${pct(c.pct_served)}</span><br>Underserved: <span class="mono">${pct(c.pct_underserved)}</span><br>Unserved: <span class="mono">${pct(c.pct_unserved)}</span>`);
+    b.addEventListener("click", () => selectCounty(b.dataset.f === state.county ? "" : b.dataset.f, b.dataset.f !== state.county));
+  });
+}
+
+/* ---------- town directory ---------- */
+function renderDir(q = "") {
+  const nq = norm(q.trim());
+  const list = TOWNS.filter((t) => !nq || norm(t.name).includes(nq) || norm(countyName(t.fips)).includes(nq)).sort((a, b) => a.name.localeCompare(b.name));
+  let last = ""; const out = [];
+  list.forEach((t) => { const L = t.name[0].toUpperCase(); if (!nq && L !== last) { out.push(`<tr class="letter"><td colspan="3">${L}</td></tr>`); last = L; }
+    out.push(`<tr><td><button type="button" data-t="${TOWNS.indexOf(t)}">${esc(t.name)}</button>${t.kind !== "town" ? ` <span class="mono" style="font-size:10.5px;color:var(--muted)">${t.kind}</span>` : ""}</td><td>${esc(countyName(t.fips))}</td><td class="r mono">${fmt(t.pop)}</td></tr>`); });
+  $("dir-body").innerHTML = out.join("") || `<tr><td colspan="3" style="color:var(--muted)">No town or county matches "${esc(q)}".</td></tr>`;
+}
+renderDir();
+$("dir-filter").addEventListener("input", (e) => renderDir(e.target.value));
+$("dir-body").addEventListener("click", (e) => { const b = e.target.closest("button[data-t]"); if (b) { pickTown(TOWNS[+b.dataset.t]); $("explore").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); } });
+
+/* ---------- deep dive ---------- */
+const tech = D.technology.slice().sort((a, b) => b.locations - a.locations);
+$("tech-bars").innerHTML = tech.map((t, i) => `<div class="hbar" id="tech-${i}"><div>${esc(t.technology_name)}${t.reliable_under_bead ? '<span class="tag">RELIABLE</span>' : ""}<small class="mono">${fmt(t.median_download)} / ${fmt(t.median_upload)} Mbps · ${t.providers} provider${t.providers === 1 ? "" : "s"}</small></div><div class="tr"><i style="width:${t.pct_of_locations}%;background:${t.reliable_under_bead ? "var(--cov-3)" : "var(--cov-1)"}"></i></div><div class="v">${pct(t.pct_of_locations)}</div></div>`).join("");
+tech.forEach((t, i) => bindTip($(`tech-${i}`), `<b>${esc(t.technology_name)}</b><br><span class="mono">${fmt(t.locations)}</span> locations · ${pct(t.pct_of_locations)}<br>${t.reliable_under_bead ? "Counts as reliable (BEAD)" : "Not counted as reliable (BEAD)"}`));
+
+const byBrand = {};
+D.providers.forEach((p) => { const b = byBrand[p.brand_name] ||= { name: p.brand_name, sole: 0, loc: 0, tech: new Set() }; b.sole += p.sole_wired_100_20_locations; b.loc += p.locations; p.technologies.split(", ").forEach((x) => b.tech.add(x)); });
+const sole = Object.values(byBrand).filter((b) => b.sole > 0).sort((a, b) => b.sole - a.sole).slice(0, 10);
+$("sole-bars").innerHTML = sole.map((b, i) => `<div class="hbar" id="sole-${i}"><div>${esc(b.name)}<small>${esc([...b.tech].sort().join(", "))}</small></div><div class="tr"><i style="width:${b.sole / sole[0].sole * 100}%;background:var(--cov-3)"></i></div><div class="v">${compact(b.sole)}</div></div>`).join("");
+sole.forEach((b, i) => bindTip($(`sole-${i}`), `<b>${esc(b.name)}</b><br>Only wired 100/20 option at <span class="mono">${fmt(b.sole)}</span> locations<br>Total footprint: <span class="mono">${fmt(b.loc)}</span> locations`));
+
+if (D.tracts) {
+  const tc = Object.fromEntries(D.tract_columns.map((c, i) => [c, i]));
+  const T = D.tracts.filter((r) => r[tc.locations] >= 50 && r[tc.pop_per_sqmi] > 0);
+  const rho = (f, a) => D.spearman.find((s) => s.fcc_metric === f)?.[a];
+  const rhoA = (f, a) => (D.spearman_adoption || []).find((s) => s.adoption_metric === f)?.[a];
+  const W = 760, H = 330, P = { l: 52, r: 16, t: 14, b: 44 };
+  const X = (v) => P.l + ((Math.log10(Math.max(3.2, v)) - .5) / 3.9) * (W - P.l - P.r);
+  const Y = (v) => P.t + (1 - v / 100) * (H - P.t - P.b);
+  const s = $("dd-scatter"); s.hidden = false;
+  s.innerHTML = `<h3>Density, not income, predicts availability</h3><div class="sub">Each dot is a census tract with at least 50 locations; size = locations. Spearman ρ = ${rho("pct_served", "pop_per_sqmi").toFixed(2)}.</div>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Scatter plot of census tracts: population density on a log scale versus percent of locations served">
+    ${[0, 25, 50, 75, 100].map((v) => `<line x1="${P.l}" x2="${W - P.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="rgba(140,175,230,.12)"/><text x="${P.l - 8}" y="${Y(v) + 4}" text-anchor="end">${v}%</text>`).join("")}
+    ${[10, 100, 1000, 10000].map((v) => `<line x1="${X(v)}" x2="${X(v)}" y1="${P.t}" y2="${H - P.b}" stroke="rgba(140,175,230,.12)"/><text x="${X(v)}" y="${H - P.b + 18}" text-anchor="middle">${v.toLocaleString("en-US")}</text>`).join("")}
+    <text class="at" x="${(W + P.l) / 2}" y="${H - 6}" text-anchor="middle">People per square mile (log scale) · y: % of locations served at 100/20</text>
+    ${T.map((r, i) => `<circle data-i="${i}" cx="${X(r[tc.pop_per_sqmi]).toFixed(1)}" cy="${Y(r[tc.pct_served]).toFixed(1)}" r="${Math.max(4, Math.min(9, Math.sqrt(r[tc.locations]) / 7)).toFixed(1)}" fill="${css("--cov-4")}" fill-opacity=".72" stroke="${css("--panel-solid")}" stroke-width="1.5"/>`).join("")}
+    </svg>`;
+  s.querySelectorAll("circle").forEach((c) => { const r = T[+c.dataset.i]; bindTip(c, `<b>Tract ${esc(r[tc.tract_geoid])}</b> · ${esc(r[tc.county_name])}<br>Served: <span class="mono">${pct(r[tc.pct_served])}</span><br>Density: <span class="mono">${fmt(r[tc.pop_per_sqmi])}</span> per sq mi<br>Median income: <span class="mono">${r[tc.median_household_income] != null ? "$" + fmt(r[tc.median_household_income]) : "n/a"}</span>`); });
+
+  const d = $("dd-density"); d.hidden = false;
+  d.innerHTML = `<h3>Served share by tract density</h3><div class="sub">Residential locations served at 100/20</div><div class="hbars">${D.by_density.map((g) => `<div class="hbar"><div>${esc(g.density_class)}<small>${g.tracts} tracts · ${fmt(g.locations)} locations</small></div><div class="tr"><i style="width:${g.pct_served}%;background:var(--cov-3)"></i></div><div class="v">${pct(g.pct_served)}</div></div>`).join("")}</div>`;
+  const ic = $("dd-income"); ic.hidden = false;
+  ic.innerHTML = `<h3>Availability vs. adoption by tract income</h3><div class="sub">Served locations (FCC) and households with a cable, fiber or DSL subscription (ACS)</div>
+    <div class="legend-row" style="margin:0 0 12px"><span><i style="background:var(--cov-3)"></i>Served at 100/20</span><span><i style="background:var(--violet)"></i>Wired subscription</span></div>
+    <div class="hbars">${D.by_income.map((g) => `<div class="hbar"><div>${esc(g.income_quartile)}<small>median $${compact(g.median_income)}</small></div><div class="tr"><i style="width:${g.pct_served}%;background:var(--cov-3)"></i><i style="width:${g.pct_hh_wired_broadband}%;background:var(--violet)"></i></div><div class="v" style="line-height:1.3">${pct(g.pct_served)}<br>${pct(g.pct_hh_wired_broadband)}</div></div>`).join("")}</div>
+    <p class="callout">Served share tracks density (ρ = <b>${rho("pct_served", "pop_per_sqmi").toFixed(2)}</b>), not income (ρ = <b>${rho("pct_served", "median_household_income").toFixed(2)}</b>). Subscriptions rise with income (ρ = <b>${rhoA("pct_hh_broadband", "median_household_income").toFixed(2)}</b>). Availability counts locations and adoption counts households, so compare levels, not the same population.</p>`;
+}
+
+refresh(false);
+})();
+</script>

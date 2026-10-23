@@ -1,2 +1,5 @@
-def main() -> None:
-    print("Hello from vermont-broadband-analysis!")
+"""Vermont Broadband Access & Digital Divide Analysis."""
+
+from .cli import main
+
+__all__ = ["main"]

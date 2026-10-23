@@ -1,0 +1,41 @@
+{
+  "acs5_2024_vt_extract.csv": {
+    "description": "Vermont county (5-digit) and tract (11-digit) rows extracted from the ACS 2020-2024 5-year table-based Summary File",
+    "source_files": [
+      "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b01002.dat",
+      "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b01003.dat",
+      "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b17001.dat",
+      "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b19013.dat",
+      "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b28002.dat",
+      "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b28003.dat"
+    ],
+    "retrieved": "2026-10-22",
+    "method": "Streamed in a browser; kept GEO_ID prefixes 0500000US50 and 1400000US50 and the columns listed in census.ACS_VARIABLES. Column and row-weighted checksums verified against the source extract.",
+    "sha256": "6deb74199b23876fdbe77de8e3d7ce2f174524bec2922abefacb8be8a10cfcd5"
+  },
+  "2024_gaz_tracts_50_landarea.csv": {
+    "description": "GEOID and ALAND_SQMI from the 2024 Census Gazetteer tract file for Vermont",
+    "source_files": [
+      "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2024_Gazetteer/2024_gaz_tracts_50.txt"
+    ],
+    "retrieved": "2026-10-22",
+    "sha256": "9b8813fdc0d3cd6684dd4c387f14cf73f606241cedc64a4184b8dbd6ebe5cd59"
+  },
+  "vt_towns_2024.psv": {
+    "description": "Vermont county subdivisions (towns, cities, gores, grants): GEOID, name and internal point from the 2024 Gazetteer, with ACS 2020-2024 5-year population (B01003, summary level 060)",
+    "source_files": [
+      "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2024_Gazetteer/2024_gaz_cousubs_50.txt",
+      "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b01003.dat"
+    ],
+    "retrieved": "2026-10-22",
+    "sha256": "21031211b8ca3cd3faba1db10b42dbeebf699084f61a6c1a0cbc38e4589ab617"
+  },
+  "vt_counties_tigerweb.txt": {
+    "description": "Generalized Vermont county outlines (one line per county: GEOID|name|rings; '#' separates polygons, ';' separates rings)",
+    "source_files": [
+      "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query?where=STATE='50'&maxAllowableOffset=0.004&geometryPrecision=3&outSR=4326&f=geojson"
+    ],
+    "retrieved": "2026-10-22",
+    "sha256": "bbee20961676a954eb256df46fbe910b92a9232dd3685606dfa1a41d25c36891"
+  }
+}

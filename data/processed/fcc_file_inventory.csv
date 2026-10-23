@@ -1,0 +1,9 @@
+file_name,zip_sha256,rows,technology_codes,states,providers,brands,unique_locations,full_duplicates,missing_values,candidate_key_duplicates,location_provider_tech_repeats,low_latency_values,business_residential_codes,invalid_block_geoid_length,non_vermont_block_geoids,max_download_mbps,min_download_mbps
+bdc_50_Cable_fixed_broadband_D25_03sep2026.csv,167a4ec40c7e365e2c64822be6cf4621249b1f6f4cdc1e2f128072f1dd3770ff,191040,[40],['VT'],4,4,190998,0,0,0,0,[1],"['B', 'X']",0,0,2000,50
+bdc_50_Copper_fixed_broadband_D25_03sep2026.csv,c3d38d2cf3c87bccd4c827c60d8ab172c43de8df20391c8c9f0c3a5876a40ee7,108650,[10],['VT'],9,9,108552,0,0,0,0,"[0, 1]","['B', 'R', 'X']",0,0,100,0
+bdc_50_FibertothePremises_fixed_broadband_D25_18aug2026.csv,3bb3850436ab0ccbf03324e9310520c0e410b8d81903ae703d58a40f827d1678,203946,[50],['VT'],22,22,187037,0,0,0,0,"[0, 1]","['B', 'R', 'X']",0,0,100000,10
+bdc_50_GSOSatellite_fixed_broadband_D25_03sep2026.csv,a1b6dffbdf4e3d07a8adcc8c9bea6b805d565e5e09a2b32ca715638502073b6e,768584,[60],['VT'],2,2,282371,0,0,0,203881,[0],"['B', 'R', 'X']",0,0,100,50
+bdc_50_LBRFixedWireless_fixed_broadband_D25_03sep2026.csv,e9265861de329eaec1e84e710ef859a917c495e24b2a2b8f420f7c96a0dd7157,7990,[72],['VT'],5,5,7982,0,0,0,0,[1],"['B', 'R', 'X']",0,0,600,0
+bdc_50_LicensedFixedWireless_fixed_broadband_D25_03sep2026.csv,2618b7a07952cb31c0754b04203b43cebcfe71c3564a0226d6199cc8e59c7d2b,563775,[71],['VT'],5,5,269839,0,0,0,17238,[1],"['B', 'R', 'X']",0,0,300,0
+bdc_50_NGSOSatellite_fixed_broadband_D25_03sep2026.csv,9c47f304ff4d3fd095185e510929e5b6041b9dc4ae68d24174d2bcd7c84e4f73,282226,[61],['VT'],1,1,282226,0,0,0,0,[1],['X'],0,0,280,280
+bdc_50_UnlicensedFixedWireless_fixed_broadband_D25_03sep2026.csv,eea4881acb317d2690e5777822d3a87aff9236c8b43fa44b82852e9360f73d39,9014,[70],['VT'],4,4,9009,0,0,0,0,[1],"['R', 'X']",0,0,1200,0

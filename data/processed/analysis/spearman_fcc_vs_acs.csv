@@ -1,0 +1,6 @@
+fcc_metric,median_household_income,pop_per_sqmi,pct_below_poverty,median_age,pct_hh_broadband,pct_hh_no_internet
+pct_served,-0.059,0.726,0.181,-0.303,0.16,-0.264
+pct_unserved,0.012,-0.766,-0.151,0.328,-0.192,0.278
+pct_no_wired_100_20,0.067,-0.721,-0.194,0.309,-0.152,0.256
+pct_two_plus_wired_100_20,-0.189,0.563,0.291,-0.253,0.102,-0.151
+pct_has_fiber,-0.154,0.186,0.203,-0.134,0.029,-0.075

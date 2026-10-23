@@ -1,0 +1,9 @@
+technology,technology_name,records,locations,providers,median_download,median_upload,pct_of_locations,reliable_under_bead
+60,GSO Satellite,564703,282371,2,100.0,3.0,100.0,False
+61,NGSO Satellite,282226,282226,1,280.0,30.0,99.95,False
+71,Licensed Fixed Wireless,498967,258895,5,25.0,3.0,91.68,True
+40,Cable,190135,190102,4,1200.0,35.0,67.32,True
+50,Fiber to the Premises,199013,183350,20,2000.0,2000.0,64.93,True
+10,Copper,104869,104779,8,10.0,1.0,37.11,True
+70,Unlicensed Fixed Wireless,9014,9009,4,75.0,25.0,3.19,False
+72,LBR Fixed Wireless,7989,7981,5,50.0,10.0,2.83,True

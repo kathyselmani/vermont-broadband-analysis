@@ -1,0 +1,5 @@
+adoption_metric,median_household_income,pop_per_sqmi,pct_below_poverty,median_age,pct_served
+pct_hh_broadband,0.347,0.201,-0.236,-0.122,0.16
+pct_hh_wired_broadband,0.332,0.389,-0.115,-0.076,0.48
+pct_hh_no_internet,-0.357,-0.257,0.279,0.077,-0.264
+pct_hh_no_computer,-0.336,-0.25,0.259,0.086,-0.219

@@ -16,10 +16,15 @@ __pycache__/
 # Raw datasets
 data/raw/*
 !data/raw/.gitkeep
+# Small Vermont Census extracts (~20 KB) are versioned
+!data/raw/census/
 
 # Processed datasets
 data/processed/*
 !data/processed/.gitkeep
+# Small aggregate tables are versioned so findings are reviewable
+!data/processed/analysis/
+!data/processed/fcc_file_inventory.csv
 
 # Power BI
 *.pbix

@@ -1,0 +1,39 @@
+provider_id,brand_name,locations,technologies,median_download,sole_wired_100_20_locations
+290111,Viasat Inc,282363,GSO Satellite,50.0,0
+130627,HughesNet,282340,GSO Satellite,100.0,0
+430076,Starlink,282226,NGSO Satellite,280.0,0
+460632,VTel Wireless Inc,247300,Licensed Fixed Wireless,25.0,0
+130317,Xfinity,171306,"Cable, Fiber to the Premises",1200.0,61314
+130403,T-Mobile,139685,Licensed Fixed Wireless,0.0,0
+130335,Consolidated Communications,97204,Copper,10.0,168
+130335,Fidium Fiber,91417,Fiber to the Premises,2000.0,14246
+131425,Verizon,58109,Licensed Fixed Wireless,25.0,0
+130077,AT&T,53290,Licensed Fixed Wireless,25.0,0
+440199,ECFiber,25000,Fiber to the Premises,1000.0,12734
+131167,Burlington Telecom,18050,Fiber to the Premises,1000.0,95
+130235,Spectrum,16568,"Cable, Fiber to the Premises",1000.0,6642
+131175,GREEN MOUNTAIN ACCESS,16192,"Copper, Fiber to the Premises",1000.0,7294
+131426,Vermont Telephone Company,16187,"Copper, Fiber to the Premises",10000.0,4410
+450083,NEK Broadband,9852,Fiber to the Premises,1000.0,4924
+460055,New England Wireless Co,6404,"LBR Fixed Wireless, Unlicensed Fixed Wireless",36.0,0
+131310,TDS Telecom,6395,"Copper, Fiber to the Premises",8000.0,1502
+131378,GoNetspeed,3876,"Copper, Fiber to the Premises",1000.0,1340
+240090,Stowe Communications LLC,3355,"Cable, Fiber to the Premises",1000.0,1012
+480002,Maple Broadband,3348,Fiber to the Premises,1000.0,930
+520070,Phoenix Communications II,3283,Unlicensed Fixed Wireless,100.0,0
+450085,NEW Alliance,2868,LBR Fixed Wireless,37.0,0
+470119,DVFiber,2700,Fiber to the Premises,1000.0,620
+190093,Cloud Alliance,2356,LBR Fixed Wireless,50.0,0
+370115,Netafy,1992,"LBR Fixed Wireless, Unlicensed Fixed Wireless",150.0,0
+390166,Mansfield Community Fiber,1691,Fiber to the Premises,1000.0,733
+130269,Topsham Telephone Company,1674,"Copper, Fiber to the Premises",300.0,237
+400036,Kingdom Fiber,1619,Fiber to the Premises,1000.0,34
+510051,Trans-Video,1415,Cable,500.0,178
+530001,GREEN MOUNTAIN ACCESS,1163,Fiber to the Premises,10000.0,481
+130269,Topsham Communications,1000,Fiber to the Premises,300.0,44
+130514,Franklin Telephone Company,925,"Copper, Fiber to the Premises",10.0,797
+430222,"Wireless Partners, LLC",583,Licensed Fixed Wireless,50.0,0
+190188,Hudson Valley Wireless,100,"LBR Fixed Wireless, Unlicensed Fixed Wireless",284.0,0
+420059,Hub66 Inc,42,Fiber to the Premises,8000.0,41
+130993,FirstLight Fiber,3,Copper,10.0,0
+190405,Whip City Fiber,3,Fiber to the Premises,1000.0,1
