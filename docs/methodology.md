@@ -34,6 +34,7 @@ uv run vermont-broadband-analysis all --skip-census
 | `profile` | `fcc.py` | `data/processed/fcc_file_inventory.csv` (schema, keys, checksums, anomalies) |
 | `build` | `fcc.py` | validated, combined `fcc_fixed_broadband_vermont_2025_12_31.parquet` (2,135,225 rows) |
 | `metrics` | `metrics.py` | `location_access.parquet` + aggregate tables in `data/processed/analysis/` |
+| `providers` | `providers.py` | `providers_by_county.csv`, `providers_by_zone_h3r7.csv` |
 | `census` | `census.py` | `acs_tract.csv`, `acs_county.csv` |
 | `socioeconomic` | `socioeconomic.py` | tract FCC + ACS join, correlations, group comparisons |
 | `dashboard` | `dashboard_data.py` | `dashboard/web/data.json` and self-contained `dashboard/web/index.html` |
@@ -88,7 +89,20 @@ where that count is exactly one.
 
 **Satellite only** = satellite offers and no terrestrial (wired or fixed-wireless) offer.
 
-## 6. Socioeconomic join
+## 6. Providers by area
+
+`providers.py` lists, for each county and each H3 resolution-7 zone (about 5 km²), every
+brand + technology with an R/X offer there: the share of the area's residential locations
+it reaches, its median advertised download/upload, and the share of its offers at or above
+100/20. Satellite (Starlink, HughesNet, Viasat) is reported almost everywhere and is shown
+once statewide in the dashboard. Zones with fewer than 5 locations show the provider list of
+their resolution-6 parent (about 36 km²), and zone tables publish shares only, not counts.
+
+This answers "who serves this area and at what speed". It cannot confirm service at a
+specific address; the dashboard links to the FCC National Broadband Map address search for
+that.
+
+## 7. Socioeconomic join
 
 Tract-level FCC aggregates are joined to ACS tract estimates on the 11-digit GEOID (2020
 tract definitions on both sides). Population density uses Gazetteer land area.
@@ -100,7 +114,7 @@ Every ACS figure is a survey estimate with a margin of error. MOEs for income an
 subscription are kept in `acs_tract.csv`. Small tracts are noisy, so the dashboard scatter
 shows only tracts with at least 50 FCC locations.
 
-## 7. Limitations
+## 8. Limitations
 
 - **Availability ≠ adoption, price or quality.** FCC data is what providers report they
   could deliver within 10 business days. It is not measured speed, and it is challengeable.
@@ -111,9 +125,9 @@ shows only tracts with at least 50 FCC locations.
 - **Ecological inference.** Tract-level correlations do not describe individual households.
 - **Snapshot.** One reporting period (Dec 2025). Network build-out continues, especially
   community fiber built by Vermont's Communications Union Districts.
-- **Licensing.** See §8.
+- **Licensing.** See §9.
 
-## 8. Privacy, licensing and attribution
+## 9. Privacy, licensing and attribution
 
 **Public data only.** Every input is published openly by a U.S. federal agency:
 the FCC Broadband Data Collection availability files and U.S. Census Bureau products

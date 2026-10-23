@@ -6,8 +6,9 @@ have, and how does that line up with income and rurality?
 This project combines the **FCC Broadband Data Collection** (all eight fixed technologies,
 data as of December 31, 2025) with **U.S. Census ACS** estimates, and publishes the results
 as an interactive dashboard: a 3D hexagon map you can filter by measure and county, a
-town-to-county finder for all 256 Vermont towns, a ranking of the counties with the
-greatest need, and the socioeconomic context behind the gaps.
+town-to-county finder for all 256 Vermont towns, the providers available in each county
+and in any ~5 km² zone you click on the map, a ranking of the counties with the greatest
+need, and the socioeconomic context behind the gaps.
 
 ![Dashboard preview](dashboard/web/preview.png)
 
@@ -55,6 +56,7 @@ src/vermont_broadband_analysis/
   metrics.py            location table and aggregates
   census.py             ACS and Gazetteer inputs (optional boundary download)
   socioeconomic.py      FCC x ACS join and associations
+  providers.py          providers by county and by H3 res-7 zone
   places.py             towns, county outlines, county need index
   dashboard_data.py     dashboard data bundle and page
   cli.py                `vermont-broadband-analysis <step>`
@@ -86,7 +88,7 @@ uv run vermont-broadband-analysis all
 Census inputs are read from `data/raw/census/` (see `data/reference/census_download_manifest.json`
 for sources); `census.extract_summary_file()` rebuilds them from the ACS Summary File.
 
-Steps can run one at a time: `profile`, `build`, `metrics`, `census`, `socioeconomic`,
+Steps can run one at a time: `profile`, `build`, `metrics`, `providers`, `census`, `socioeconomic`,
 `dashboard`. Use `all --skip-census` to run without network access to census.gov.
 
 Optional SQL layer: create the table with `sql/schema/001_create_fcc_fixed_broadband.sql`,
@@ -98,7 +100,7 @@ Only public U.S. government data is used (FCC BDC and U.S. Census Bureau; not su
 to copyright, 17 U.S.C. §105). No addresses, coordinates or FCC Location IDs (FCC Fabric,
 owned by CostQuest) are published; location-level files stay local and are git-ignored.
 Hexagons with fewer than 5 locations show no counts. Details in
-[`docs/methodology.md` §8](docs/methodology.md#8-privacy-licensing-and-attribution).
+[`docs/methodology.md` §9](docs/methodology.md#9-privacy-licensing-and-attribution).
 
 ## Method in brief
 

@@ -69,6 +69,59 @@ def run() -> dict:
         "competition": comp.to_dict(orient="records"),
     }
 
+    # Providers by county and by H3 res-7 zone (satellite listed once statewide)
+    pc = pd.read_csv(a / "providers_by_county.csv", dtype={"county_fips": "string"})
+    pz = pd.read_csv(a / "providers_by_zone_h3r7.csv")
+    sat = pc["technology"].isin(config.SATELLITE_TECH)
+    keys = (
+        pd.concat(
+            [
+                pc.loc[~sat, ["brand_name", "technology"]],
+                pz.loc[
+                    ~pz["technology"].isin(config.SATELLITE_TECH),
+                    ["brand_name", "technology"],
+                ],
+            ]
+        )
+        .drop_duplicates()
+        .sort_values(["brand_name", "technology"])
+        .reset_index(drop=True)
+    )
+    idx = {(b, int(t)): i for i, (b, t) in enumerate(keys.itertuples(index=False))}
+
+    def pack(df: pd.DataFrame, area: str) -> dict:
+        df = df[~df["technology"].isin(config.SATELLITE_TECH)]
+        out = {}
+        for area_id, g in df.groupby(area):
+            out[area_id] = [
+                [
+                    idx[(r.brand_name, int(r.technology))],
+                    round(float(r.pct_locations), 1),
+                    int(r.median_download),
+                    int(r.median_upload),
+                    int(r.share_offers_100_20),
+                ]
+                for r in g.sort_values("pct_locations", ascending=False).itertuples()
+            ]
+        return out
+
+    bundle["provider_keys"] = [[b, int(t)] for b, t in keys.itertuples(index=False)]
+    bundle["providers_county"] = pack(pc, "county_fips")
+    bundle["providers_zone"] = pack(pz, "h3_res7_id")
+    bundle["zone_borrowed"] = sorted(
+        pz.loc[pz["borrowed_from_res6"], "h3_res7_id"].unique().tolist()
+    )
+    bundle["satellite_statewide"] = (
+        pc[sat]
+        .groupby(["brand_name", "technology"])
+        .agg(
+            median_download=("median_download", "median"),
+            median_upload=("median_upload", "median"),
+        )
+        .reset_index()
+        .to_dict(orient="records")
+    )
+
     tract_path = a / "tract_fcc_acs.csv"
     if tract_path.exists():
         tract = pd.read_csv(tract_path, dtype={"tract_geoid": "string"})

@@ -135,6 +135,6 @@ households have no broadband subscription, the highest share in the state.
 
 ## 7. Limitations
 
-See [`methodology.md` §7](methodology.md#7-limitations): provider-reported availability,
+See [`methodology.md` §8](methodology.md#8-limitations): provider-reported availability,
 0-Mbps records, a residential universe that may include some business-only sites, a
 single reporting period, and tract-level (not household-level) socioeconomic data.

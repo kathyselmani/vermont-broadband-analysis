@@ -1,22 +1,31 @@
 """Command-line entry point: `vermont-broadband-analysis <step>`.
 
-Steps run in order with `all`: profile -> build -> metrics -> census ->
+Steps run in order with `all`: profile -> build -> metrics -> providers -> census ->
 socioeconomic -> dashboard. The census-dependent steps are skipped with
 `all --skip-census`.
 """
 
 import argparse
 
-STEPS = ["profile", "build", "metrics", "census", "socioeconomic", "dashboard"]
+STEPS = [
+    "profile",
+    "build",
+    "metrics",
+    "providers",
+    "census",
+    "socioeconomic",
+    "dashboard",
+]
 
 
 def run_step(step: str, refresh: bool = False) -> None:
-    from . import census, dashboard_data, fcc, metrics, socioeconomic
+    from . import census, dashboard_data, fcc, metrics, providers, socioeconomic
 
     {
         "profile": fcc.profile,
         "build": fcc.build,
         "metrics": metrics.run,
+        "providers": providers.run,
         "census": lambda: census.run(refresh=refresh),
         "socioeconomic": socioeconomic.run,
         "dashboard": dashboard_data.run,

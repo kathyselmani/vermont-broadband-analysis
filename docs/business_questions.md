@@ -9,7 +9,8 @@ The analysis answers five questions about **residential fixed broadband in Vermo
 | 2 | Which technologies reach Vermont homes, and at what advertised speeds? | notebook 03 §2, dashboard §02 |
 | 3 | Where is provider choice limited? How many locations have zero, one, or several wired 100/20 providers, and which providers are the sole wired option? | notebook 03 §3 and §5, dashboard §03 and §05 |
 | 4 | How does access vary geographically (county, census tract, H3 hexagon)? | notebook 03 §4 and §6, dashboard map and §04 |
-| 5 | How does availability relate to population density, income, poverty and household broadband adoption? | `notebooks/04_socioeconomic.ipynb`, dashboard §06 |
+| 5 | Which providers serve a given county or zone, with what technology and speed? | `providers.py`, dashboard explorer (county panel and map click) |
+| 6 | How does availability relate to population density, income, poverty and household broadband adoption? | `notebooks/04_socioeconomic.ipynb`, dashboard §06 |
 
 ## Out of scope
 

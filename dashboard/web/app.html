@@ -102,7 +102,9 @@ section.sec { padding-block: 72px 8px; }
 .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--line-hi), transparent); margin-top: 72px; }
 
 /* ---------- explorer ---------- */
-.explore { display: grid; grid-template-columns: 290px minmax(0, 1fr) 320px; gap: 16px; align-items: stretch; }
+.explore { display: grid; grid-template-columns: 290px minmax(0, 1fr) 330px; gap: 16px; align-items: start; }
+.explore > .panel { height: 760px; }
+.filters, .snapshot { overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(140,175,230,.3) transparent; }
 .filters { padding: 18px; display: grid; gap: 16px; align-content: start; }
 .field { display: grid; gap: 6px; }
 .field label { font: 500 11px var(--font-data); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
@@ -124,7 +126,7 @@ select:focus, input[type="search"]:focus { outline: 2px solid var(--cyan); outli
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .reset { all: unset; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; font-size: 13px; color: var(--ink-2); padding-top: 8px; border-top: 1px solid var(--line); }
 .reset:hover { color: var(--ink); }
-.mapbox { position: relative; overflow: hidden; min-height: 640px; background: radial-gradient(600px 500px at 50% 40%, #0e1a30, #070c17); }
+.mapbox { position: relative; overflow: hidden; background: radial-gradient(600px 500px at 50% 40%, #0e1a30, #070c17); }
 #map { position: absolute; inset: 0; }
 .map-legend { position: absolute; right: 14px; bottom: 14px; z-index: 2; padding: 12px 14px; width: 240px; display: grid; gap: 6px; }
 .map-legend .t { font-size: 12.5px; color: var(--ink); }
@@ -158,8 +160,25 @@ select:focus, input[type="search"]:focus { outline: 2px solid var(--cyan); outli
 .towns-list button { font: 12.5px var(--font-body); padding: 5px 9px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.03); color: var(--ink-2); cursor: pointer; }
 .towns-list button:hover { border-color: var(--cyan); color: var(--ink); }
 .towns-list .city { border-color: rgba(143,134,255,.45); }
-@media (max-width: 1180px) { .explore { grid-template-columns: 280px minmax(0, 1fr); } .snapshot { grid-column: 1 / -1; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); } }
-@media (max-width: 760px) { .explore { grid-template-columns: 1fr; } .mapbox { min-height: 540px; } .map-legend { width: auto; left: 12px; right: 12px; } }
+.provs { display: grid; gap: 10px; }
+.prov { display: grid; gap: 3px; }
+.prov .pn { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; font-size: 13px; }
+.prov .pn b { font-weight: 600; }
+.prov .tt { font: 500 10.5px var(--font-data); letter-spacing: .04em; color: var(--ink-2); border: 1px solid var(--line-hi); border-radius: 4px; padding: 1px 6px; white-space: nowrap; }
+.prov .tt.t50 { color: var(--cov-4); border-color: color-mix(in srgb, var(--cov-4) 45%, transparent); }
+.prov .tt.t40 { color: #8ab8ff; border-color: rgba(138,184,255,.45); }
+.prov .pb { display: grid; grid-template-columns: minmax(0,1fr) 40px; gap: 8px; align-items: center; }
+.prov .pb .tr { height: 6px; background: rgba(255,255,255,.06); border-radius: 3px; overflow: hidden; }
+.prov .pb .tr i { display: block; height: 100%; border-radius: 3px; }
+.prov .pb .v { font: 12px var(--font-data); text-align: right; }
+.prov .ps { font-size: 11px; color: var(--muted); }
+.spd.fast { color: var(--served); } .spd.slow { color: var(--under); }
+.zonebox { border: 1px solid rgba(95,225,211,.35); background: rgba(95,225,211,.05); border-radius: 12px; padding: 14px; }
+.linkbtn { all: unset; cursor: pointer; font-size: 12.5px; color: var(--ink-2); }
+.linkbtn:hover { color: var(--ink); }
+a.fcc { font-size: 12.5px; }
+@media (max-width: 1180px) { .explore { grid-template-columns: 280px minmax(0, 1fr); } .explore > .snapshot { grid-column: 1 / -1; height: auto; max-height: none; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); } }
+@media (max-width: 760px) { .explore { grid-template-columns: 1fr; } .explore > .filters { height: auto; } .explore > .mapbox { height: 560px; } .map-legend { width: auto; left: 12px; right: 12px; } }
 
 /* ---------- findings ---------- */
 .findings { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.6fr); gap: 32px; align-items: start; }
@@ -311,7 +330,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <div class="sec-head">
       <div class="eyebrow">Explore the data</div>
       <h2 class="section-title" id="explore-title">Where is broadband available in Vermont?</h2>
-      <p class="lede">Pick a measure, isolate a county, or search for a town to see which county it belongs to. Each hexagon covers about 0.7 km²; its height shows how many homes and businesses are there.</p>
+      <p class="lede">Pick a measure, isolate a county, or search for a town to see which county it belongs to. Click anywhere on the map to see which providers serve that zone. Each hexagon covers about 0.7 km²; its height shows how many homes and businesses are there.</p>
     </div>
     <div class="explore">
       <div class="panel filters">
@@ -447,6 +466,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <ul>
           <li>No addresses, coordinates, household data or FCC location IDs appear on this page or in the published files.</li>
           <li>The smallest unit shown is an H3 hexagon of about 0.7 km². Hexagons with fewer than 5 locations show no count, and their colors come from the surrounding area (about 5 km²).</li>
+          <li>Provider lists are shown for zones of about 5 km². Zones with fewer than 5 locations show the wider area (about 36 km²) instead.</li>
           <li>Census figures are published estimates for whole tracts, counties and towns.</li>
           <li>This page uses no cookies, analytics or tracking.</li>
         </ul>
@@ -494,6 +514,9 @@ const COUNTY = Object.fromEntries(D.counties.map((c) => [c.county_fips, c]));
 const NEED = Object.fromEntries((D.need || []).map((n) => [n.county_fips, n]));
 const ACS = Object.fromEntries((D.county_acs || []).map((n) => [n.county_fips, n]));
 const TOWNS = D.towns.map(([name, kind, fips, pop, lat, lon]) => ({ name, kind, fips, pop, lat, lon }));
+// Vermont has separate city and town governments with the same name (St. Albans, Barre, Newport, Rutland)
+const nameCount = {}; TOWNS.forEach((t) => (nameCount[t.name] = (nameCount[t.name] || 0) + 1));
+TOWNS.forEach((t) => { if (nameCount[t.name] > 1) t.name = `${t.name} (${t.kind})`; });
 const townsByCounty = {};
 TOWNS.forEach((t) => (townsByCounty[t.fips] ||= []).push(t));
 Object.values(townsByCounty).forEach((l) => l.sort((a, b) => b.pop - a.pop));
@@ -578,7 +601,7 @@ function initHero() {
 initHero();
 
 /* ---------- explorer state ---------- */
-let state = { metric: "pct_below_100_20", county: "", labels: true, threeD: true, town: null };
+let state = { metric: "pct_below_100_20", county: "", labels: true, threeD: true, town: null, zone: null };
 const countySel = $("f-county");
 D.counties.slice().sort((a, b) => a.county_name.localeCompare(b.county_name)).forEach((c) => countySel.insertAdjacentHTML("beforeend", `<option value="${c.county_fips}">${esc(c.county_name)} County</option>`));
 
@@ -619,6 +642,7 @@ function mapLayers() {
     L.push(new deck.ScatterplotLayer({ id: "town-dots", data: towns, getPosition: (t) => [t.lon, t.lat, 0], getRadius: 3, radiusUnits: "pixels", parameters: { depthCompare: "always" }, getFillColor: [233, 238, 247, 230], stroked: true, getLineColor: [6, 10, 19, 255], lineWidthUnits: "pixels", getLineWidth: 1.5 }));
     L.push(new deck.TextLayer({ id: "town-labels", data: towns, getPosition: (t) => [t.lon, t.lat, 0], getText: (t) => t.name, getSize: sel ? 12 : 12.5, getColor: [233, 238, 247, 255], getPixelOffset: [0, -12], parameters: { depthCompare: "always" }, fontFamily: "Public Sans, system-ui, sans-serif", fontWeight: 600, fontSettings: { sdf: true }, outlineWidth: 3, outlineColor: [6, 10, 19, 230], characterSet: "auto", billboard: true }));
   }
+  if (state.zone) L.push(new deck.PolygonLayer({ id: "zone", data: [state.zone], getPolygon: (z) => h3.cellToBoundary(z, true), filled: true, getFillColor: [95, 225, 211, 28], stroked: true, getLineColor: [95, 225, 211, 255], getLineWidth: 2.5, lineWidthUnits: "pixels", parameters: { depthCompare: "always" } }));
   if (state.town) L.push(new deck.ScatterplotLayer({ id: "town-pin", data: [state.town], getPosition: (t) => [t.lon, t.lat, 0], getRadius: 9, radiusUnits: "pixels", filled: false, stroked: true, getLineColor: [95, 225, 211, 255], getLineWidth: 2.5, lineWidthUnits: "pixels" }));
   return L;
 }
@@ -626,12 +650,30 @@ function hexTip({ object }) {
   if (!object) return null;
   const r = object.r; const cn = countyName(object.fips);
   const head = object.small ? `<b>${esc(cn)} County</b><br><span class="dim">Fewer than 5 locations. Values for the surrounding area:</span>` : `<b>${fmt(r[cols.locations])} locations</b> · ${esc(cn)} County`;
-  return { html: `${head}<br>Below 100/20: <span class="mono">${pct(r[cols.pct_below_100_20])}</span><br>Unserved: <span class="mono">${pct(r[cols.pct_unserved])}</span><br>Fiber available: <span class="mono">${pct(r[cols.pct_has_fiber])}</span><br>No wired 100/20: <span class="mono">${pct(r[cols.pct_no_wired_100_20])}</span>`, className: "tip", style: { position: "absolute", background: "#0b1426", color: "#e9eef7", border: "1px solid rgba(140,190,255,.32)", borderRadius: "10px", padding: "9px 11px", fontSize: "12.5px", maxWidth: "280px" } };
+  return { html: `${head}<br>Below 100/20: <span class="mono">${pct(r[cols.pct_below_100_20])}</span><br>Unserved: <span class="mono">${pct(r[cols.pct_unserved])}</span><br>Fiber available: <span class="mono">${pct(r[cols.pct_has_fiber])}</span><br>No wired 100/20: <span class="mono">${pct(r[cols.pct_no_wired_100_20])}</span><br><span class="dim">Click to see the providers in this zone</span>`, className: "tip", style: { position: "absolute", background: "#0b1426", color: "#e9eef7", border: "1px solid rgba(140,190,255,.32)", borderRadius: "10px", padding: "9px 11px", fontSize: "12.5px", maxWidth: "280px" } };
 }
 function initMap() {
   if (!libsOK || !glOK) { $("map-fallback").hidden = false; if (!libsOK) $("map-fallback").textContent = "The map library didn't load. The county list below shows the same measures."; return; }
   map = new deck.Deck({ parent: $("map"), initialViewState: viewFor(VT_BOUNDS), controller: { dragRotate: true, touchRotate: true }, layers: mapLayers(), getTooltip: hexTip,
-    onClick: ({ object }) => { if (object && object.fips) selectCounty(object.fips === state.county ? "" : object.fips, false); } });
+  });
+  // Own tap detection (works the same for mouse, touch and pen)
+  let down = null;
+  const mapEl = $("map");
+  mapEl.addEventListener("pointerdown", (e) => { down = { x: e.clientX, y: e.clientY, t: e.timeStamp }; }, true);
+  mapEl.addEventListener("pointerup", (e) => {
+    if (!down || Math.hypot(e.clientX - down.x, e.clientY - down.y) > 6 || e.timeStamp - down.t > 800) { down = null; return; }
+    down = null;
+    const r = mapEl.getBoundingClientRect();
+    const info = map.pickObject({ x: e.clientX - r.left, y: e.clientY - r.top, radius: 3, layerIds: ["hex"] });
+    onMapTap(info || {});
+  }, true);
+}
+function onMapTap({ object }) {
+      if (!object) return;
+      const z = h3.cellToParent(object.r[0], 7);
+      state.zone = state.zone === z ? null : z;
+      if (object.fips !== state.county) selectCounty(object.fips, false, true); else refresh(false);
+      if (state.zone && innerWidth < 1180) $("snapshot").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
 }
 initMap();
 
@@ -647,8 +689,9 @@ function refresh(fly) {
   else tag.hidden = true;
   if (map) { map.setProps({ layers: mapLayers() }); if (fly) map.setProps({ initialViewState: viewFor(state.county ? BOUNDS[state.county] : VT_BOUNDS) }); }
 }
-function selectCounty(fips, scroll = false) {
+function selectCounty(fips, scroll = false, keepZone = false) {
   state.county = fips; countySel.value = fips; if (!fips) state.town = null;
+  if (!keepZone) state.zone = null;
   refresh(true);
   if (scroll) $("explore").scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
 }
@@ -657,7 +700,7 @@ countySel.addEventListener("change", (e) => { state.town = null; $("town-card").
 $("t-3d").addEventListener("click", (e) => { state.threeD = !state.threeD; e.currentTarget.setAttribute("aria-pressed", state.threeD); refresh(true); });
 $("t-labels").addEventListener("click", (e) => { state.labels = !state.labels; e.currentTarget.setAttribute("aria-pressed", state.labels); refresh(false); });
 $("f-reset").addEventListener("click", () => {
-  state = { ...state, metric: "pct_below_100_20", county: "", town: null, labels: true, threeD: true };
+  state = { ...state, metric: "pct_below_100_20", county: "", town: null, zone: null, labels: true, threeD: true };
   $("f-metric").value = state.metric; $("f-town").value = ""; $("town-results").innerHTML = ""; $("town-card").hidden = true;
   $("t-3d").setAttribute("aria-pressed", "true"); $("t-labels").setAttribute("aria-pressed", "true");
   selectCounty("");
@@ -668,12 +711,14 @@ const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").rep
 function pickTown(t) {
   state.town = t; $("f-town").value = t.name; $("town-results").innerHTML = "";
   const cn = countyName(t.fips);
-  const clash = D.counties.find((c) => norm(c.county_name) === norm(t.name) && c.county_fips !== t.fips);
+  const clash = D.counties.find((c) => norm(c.county_name) === norm(t.name.replace(/ \((city|town)\)$/, "")) && c.county_fips !== t.fips);
   const kind = t.kind === "city" ? "city" : t.kind === "town" ? "town" : "unincorporated " + t.kind;
   const card = $("town-card"); card.hidden = false;
   card.innerHTML = `<b>${esc(t.name)}</b> is a ${kind} in <b>${esc(cn)} County</b>.<div class="mono" style="font-size:12px;color:var(--ink-2);margin-top:4px">Population ${fmt(t.pop)} (ACS 2020–2024)</div>` +
-    (clash ? `<div class="note">Not to be confused with ${esc(clash.county_name)} County, which is a different place.</div>` : "");
-  selectCounty(t.fips);
+    (clash ? `<div class="note">Not to be confused with ${esc(clash.county_name)} County, which is a different place.</div>` : "") +
+    `<div class="mono" style="font-size:11.5px;color:var(--ink-2);margin-top:6px">Providers near the town center are listed in the panel on the right.</div>`;
+  state.zone = libsOK ? h3.latLngToCell(t.lat, t.lon, 7) : null;
+  selectCounty(t.fips, false, true);
 }
 $("f-town").addEventListener("input", (e) => {
   const q = norm(e.target.value.trim()); const box = $("town-results");
@@ -695,6 +740,31 @@ function donut(parts) {
     return `<path d="M${P(R, a0)} A${R} ${R} 0 ${large} 1 ${P(R, a1)} L${P(r, a1)} A${r} ${r} 0 ${large} 0 ${P(r, a0)}Z" fill="${p.c}"/>`;
   }).join("") + "</svg>";
 }
+const TECH_SHORT = { 10: "DSL", 40: "Cable", 50: "Fiber", 70: "Wireless (unlicensed)", 71: "Fixed wireless", 72: "Fixed wireless (LBR)" };
+const BORROWED = new Set(D.zone_borrowed || []);
+function providerRows(entries, max = 8) {
+  if (!entries || !entries.length) return `<p style="font-size:13px;color:var(--ink-2)">No wired or fixed-wireless provider reports service here. Only satellite is available.</p>`;
+  const rows = entries.filter((e) => e[1] >= 0.5).slice(0, max);
+  const more = entries.length - rows.length;
+  return `<div class="provs">${rows.map(([k, p, down, up, fast]) => {
+    const [brand, tech] = D.provider_keys[k];
+    const speed = fast >= 50 ? `<span class="spd fast">≥ 100/20</span>` : `<span class="spd slow">below 100/20</span>`;
+    return `<div class="prov"><div class="pn"><b>${esc(brand)}</b><span class="tt t${tech}">${TECH_SHORT[tech] || tech}</span></div>
+      <div class="pb"><div class="tr"><i style="width:${Math.min(100, p)}%;background:${fast >= 50 ? "var(--served)" : "var(--under)"}"></i></div><span class="v">${p < 1 ? "<1" : Math.round(p)}%</span></div>
+      <div class="ps mono">${down === 0 ? "typ. under 1 Mbps (reported as 0)" : `typ. ${fmt(down)}/${fmt(up)} Mbps`} · ${speed}</div></div>`; }).join("")}</div>
+    ${more > 0 ? `<div class="mono" style="font-size:11.5px;color:var(--muted);margin-top:6px">+ ${more} more with smaller coverage</div>` : ""}`;
+}
+const SAT_LINE = (D.satellite_statewide || []).map((s) => `${esc(s.brand_name.replace(" Inc", ""))} ${fmt(s.median_download)}/${fmt(s.median_upload)}`).join(" · ");
+const FCC_LINK = `<a class="fcc" href="https://broadbandmap.fcc.gov/home" target="_blank" rel="noopener">Check a specific address on the FCC map ↗</a>`;
+function zoneSection() {
+  if (!state.zone) return "";
+  const entries = (D.providers_zone || {})[state.zone];
+  const borrowed = BORROWED.has(state.zone);
+  return `<div class="zonebox"><div class="k" style="color:var(--cyan)">Selected zone · about 5 km²</div>
+    <div style="font-size:12.5px;color:var(--ink-2);margin:-2px 0 10px">${borrowed ? "Very few locations here, so this shows the wider surrounding area (about 36 km²). " : ""}Share of locations in this zone where each provider reports service.</div>
+    ${providerRows(entries, 10)}
+    <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:10px"><button type="button" class="linkbtn" id="zone-clear">Clear zone</button>${FCC_LINK}</div></div>`;
+}
 function renderSnapshot() {
   const c = state.county ? COUNTY[state.county] : { ...K, county_name: "Vermont" };
   const ac = state.county ? ACS[state.county] : null; const nd = state.county ? NEED[state.county] : null;
@@ -702,7 +772,7 @@ function renderSnapshot() {
   const comp = [{ l: "No wired option", v: c.no_wired_100_20, c: "var(--unserved)" }, { l: "1 provider", v: c.one_wired_100_20, c: "var(--under)" }, { l: "2+ providers", v: c.two_plus_wired_100_20, c: "var(--served)" }];
   const tech = [["Fiber", c.pct_has_fiber], ["Cable", c.pct_has_cable], ["DSL (copper)", c.pct_has_copper], ["Fixed wireless", c.pct_has_fixed_wireless], ["Wired gigabit", c.pct_has_gigabit_wired]];
   const towns = state.county ? townsByCounty[state.county] : null;
-  $("snapshot").innerHTML = `
+  $("snapshot").innerHTML = zoneSection() + `
     <div><div class="k">${state.county ? "County snapshot" : "Statewide snapshot"}</div><h3>${esc(c.county_name)}${state.county ? " County" : ""}</h3>
       ${nd ? `<span class="badge ${nd.priority}">${nd.priority} priority · rank ${nd.need_rank} of 14</span>` : ""}</div>
     <div><div class="k">Residential locations</div><div class="big">${fmt(c.locations)}</div>
@@ -711,10 +781,14 @@ function renderSnapshot() {
       <div class="legend-row"><span><i style="background:var(--served)"></i>Served<b>${pct(c.pct_served)}</b></span><span><i style="background:var(--under)"></i>Under<b>${pct(c.pct_underserved)}</b></span><span><i style="background:var(--unserved)"></i>Unserved<b>${pct(c.pct_unserved)}</b></span></div></div>
     <div><div class="k">Wired 100/20 providers</div><div class="donut-row">${donut(comp)}<div class="donut-legend">${comp.map((p) => `<span><i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${p.c};margin-right:6px"></i><b>${pct(p.v / c.locations * 100, 0)}</b>${p.l}</span>`).join("")}</div></div></div>
     <div><div class="k">Technology available</div><div class="minibars">${tech.map(([l, v]) => `<div class="minibar"><span>${l}</span><div class="tr"><i style="width:${v}%"></i></div><span class="v">${pct(v, 0)}</span></div>`).join("")}</div></div>
+    ${state.county ? `<div><div class="k">Providers in ${esc(c.county_name)} County</div>${providerRows((D.providers_county || {})[state.county], 8)}
+      <div class="mono" style="font-size:11.5px;color:var(--muted);margin-top:8px">Satellite nearly everywhere: ${SAT_LINE} Mbps</div>
+      ${state.zone ? "" : `<div style="font-size:12.5px;color:var(--ink-2);margin-top:8px">Click the map to see providers in a specific zone. ${FCC_LINK}</div>`}</div>` : ""}
     ${ac ? `<div><div class="k">People (ACS)</div><div class="minibars"><div class="minibar"><span>Median income</span><span></span><span class="v">$${compact(ac.median_household_income)}</span></div><div class="minibar"><span>HH w/ broadband</span><div class="tr"><i style="width:${ac.pct_hh_broadband}%;background:var(--violet)"></i></div><span class="v">${pct(ac.pct_hh_broadband, 0)}</span></div></div></div>` : ""}
     ${towns ? `<div><div class="k">Towns in ${esc(c.county_name)} County (${towns.length})</div><div class="towns-list">${towns.map((t) => `<button type="button" class="${t.kind === "city" ? "city" : ""}" data-t="${TOWNS.indexOf(t)}" title="Population ${fmt(t.pop)}">${esc(t.name)}</button>`).join("")}</div></div>`
-      : `<div><div class="k">Tip</div><p style="font-size:13px;color:var(--ink-2)">Select a county or a hexagon to see its numbers and the towns inside it.</p></div>`}`;
+      : `<div><div class="k">Tip</div><p style="font-size:13px;color:var(--ink-2)">Select a county to see its providers and towns, or click anywhere on the map to see which providers serve that zone.</p></div>`}`;
   $("snapshot").querySelectorAll(".towns-list button").forEach((b) => b.addEventListener("click", () => pickTown(TOWNS[+b.dataset.t])));
+  const zc = $("zone-clear"); if (zc) zc.addEventListener("click", () => { state.zone = null; refresh(false); });
 }
 
 /* ---------- findings ---------- */
@@ -770,7 +844,7 @@ function renderDir(q = "") {
   const list = TOWNS.filter((t) => !nq || norm(t.name).includes(nq) || norm(countyName(t.fips)).includes(nq)).sort((a, b) => a.name.localeCompare(b.name));
   let last = ""; const out = [];
   list.forEach((t) => { const L = t.name[0].toUpperCase(); if (!nq && L !== last) { out.push(`<tr class="letter"><td colspan="3">${L}</td></tr>`); last = L; }
-    out.push(`<tr><td><button type="button" data-t="${TOWNS.indexOf(t)}">${esc(t.name)}</button>${t.kind !== "town" ? ` <span class="mono" style="font-size:10.5px;color:var(--muted)">${t.kind}</span>` : ""}</td><td>${esc(countyName(t.fips))}</td><td class="r mono">${fmt(t.pop)}</td></tr>`); });
+    out.push(`<tr><td><button type="button" data-t="${TOWNS.indexOf(t)}">${esc(t.name)}</button>${t.kind !== "town" && !t.name.endsWith(`(${t.kind})`) ? ` <span class="mono" style="font-size:10.5px;color:var(--muted)">${t.kind}</span>` : ""}</td><td>${esc(countyName(t.fips))}</td><td class="r mono">${fmt(t.pop)}</td></tr>`); });
   $("dir-body").innerHTML = out.join("") || `<tr><td colspan="3" style="color:var(--muted)">No town or county matches "${esc(q)}".</td></tr>`;
 }
 renderDir();

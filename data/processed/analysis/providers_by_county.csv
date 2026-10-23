@@ -1,0 +1,254 @@
+county_fips,brand_name,technology,locations,median_download,median_upload,share_offers_100_20,area_locations,pct_locations,technology_name,county_name
+50001,Viasat Inc,60,16558,100.0,3.0,0.0,16559,100.0,GSO Satellite,Addison
+50001,HughesNet,60,16554,100.0,5.0,0.0,16559,100.0,GSO Satellite,Addison
+50001,Starlink,61,16549,280.0,30.0,100.0,16559,99.9,NGSO Satellite,Addison
+50001,VTel Wireless Inc,71,13645,10.0,1.0,0.0,16559,82.4,Licensed Fixed Wireless,Addison
+50001,Xfinity,40,8407,1200.0,35.0,100.0,16559,50.8,Cable,Addison
+50001,T-Mobile,71,5736,25.0,3.0,25.0,16559,34.6,Licensed Fixed Wireless,Addison
+50001,GREEN MOUNTAIN ACCESS,50,4282,1000.0,1000.0,100.0,16559,25.9,Fiber to the Premises,Addison
+50001,Maple Broadband,50,3338,1000.0,1000.0,100.0,16559,20.2,Fiber to the Premises,Addison
+50001,Fidium Fiber,50,3128,2000.0,2000.0,100.0,16559,18.9,Fiber to the Premises,Addison
+50001,Consolidated Communications,10,2939,10.0,1.0,0.0,16559,17.7,Copper,Addison
+50001,Verizon,71,2542,300.0,20.0,56.0,16559,15.4,Licensed Fixed Wireless,Addison
+50001,GREEN MOUNTAIN ACCESS,10,2296,10.0,1.0,0.0,16559,13.9,Copper,Addison
+50001,AT&T,71,2046,25.0,3.0,6.0,16559,12.4,Licensed Fixed Wireless,Addison
+50001,GoNetspeed,50,1417,1000.0,1000.0,100.0,16559,8.6,Fiber to the Premises,Addison
+50001,GoNetspeed,10,545,0.0,0.0,0.0,16559,3.3,Copper,Addison
+50001,ECFiber,50,426,1000.0,1000.0,100.0,16559,2.6,Fiber to the Premises,Addison
+50001,New England Wireless Co,70,20,100.0,33.0,70.0,16559,0.1,Unlicensed Fixed Wireless,Addison
+50001,Xfinity,50,2,1200.0,35.0,100.0,16559,0.0,Fiber to the Premises,Addison
+50003,Viasat Inc,60,18669,50.0,3.0,0.0,18669,100.0,GSO Satellite,Bennington
+50003,HughesNet,60,18668,100.0,5.0,0.0,18669,100.0,GSO Satellite,Bennington
+50003,Starlink,61,18668,280.0,30.0,100.0,18669,100.0,NGSO Satellite,Bennington
+50003,VTel Wireless Inc,71,15641,25.0,3.0,5.0,18669,83.8,Licensed Fixed Wireless,Bennington
+50003,Xfinity,40,15567,1200.0,35.0,100.0,18669,83.4,Cable,Bennington
+50003,Fidium Fiber,50,15344,2000.0,2000.0,100.0,18669,82.2,Fiber to the Premises,Bennington
+50003,T-Mobile,71,12280,25.0,3.0,31.0,18669,65.8,Licensed Fixed Wireless,Bennington
+50003,Verizon,71,5013,25.0,6.0,47.0,18669,26.9,Licensed Fixed Wireless,Bennington
+50003,AT&T,71,3824,25.0,3.0,3.0,18669,20.5,Licensed Fixed Wireless,Bennington
+50003,DVFiber,50,875,1000.0,1000.0,100.0,18669,4.7,Fiber to the Premises,Bennington
+50003,Consolidated Communications,10,833,0.0,0.0,0.0,18669,4.5,Copper,Bennington
+50003,New England Wireless Co,72,177,10.0,1.0,0.0,18669,0.9,LBR Fixed Wireless,Bennington
+50003,New England Wireless Co,70,147,25.0,8.0,7.0,18669,0.8,Unlicensed Fixed Wireless,Bennington
+50003,"Wireless Partners, LLC",71,117,50.0,10.0,0.0,18669,0.6,Licensed Fixed Wireless,Bennington
+50003,Vermont Telephone Company,50,109,10000.0,10000.0,100.0,18669,0.6,Fiber to the Premises,Bennington
+50003,Hub66 Inc,50,42,8000.0,8000.0,100.0,18669,0.2,Fiber to the Premises,Bennington
+50003,Hudson Valley Wireless,72,11,335.0,192.0,100.0,18669,0.1,LBR Fixed Wireless,Bennington
+50003,Hudson Valley Wireless,70,7,122.0,27.0,100.0,18669,0.0,Unlicensed Fixed Wireless,Bennington
+50003,Spectrum,40,7,1000.0,1000.0,100.0,18669,0.0,Cable,Bennington
+50003,FirstLight Fiber,10,1,10.0,1.0,0.0,18669,0.0,Copper,Bennington
+50005,Viasat Inc,60,14874,50.0,3.0,0.0,14875,100.0,GSO Satellite,Caledonia
+50005,HughesNet,60,14870,100.0,5.0,0.0,14875,100.0,GSO Satellite,Caledonia
+50005,Starlink,61,14866,280.0,30.0,100.0,14875,99.9,NGSO Satellite,Caledonia
+50005,VTel Wireless Inc,71,12950,25.0,3.0,0.0,14875,87.1,Licensed Fixed Wireless,Caledonia
+50005,Consolidated Communications,10,7236,10.0,1.0,3.0,14875,48.6,Copper,Caledonia
+50005,T-Mobile,71,7209,25.0,3.0,12.0,14875,48.5,Licensed Fixed Wireless,Caledonia
+50005,Spectrum,40,6559,1000.0,35.0,100.0,14875,44.1,Cable,Caledonia
+50005,NEK Broadband,50,3635,1000.0,1000.0,100.0,14875,24.4,Fiber to the Premises,Caledonia
+50005,Verizon,71,3420,25.0,6.0,35.0,14875,23.0,Licensed Fixed Wireless,Caledonia
+50005,Phoenix Communications II,70,3125,100.0,100.0,57.0,14875,21.0,Unlicensed Fixed Wireless,Caledonia
+50005,AT&T,71,3114,25.0,3.0,0.0,14875,20.9,Licensed Fixed Wireless,Caledonia
+50005,NEW Alliance,72,2753,37.0,12.0,0.0,14875,18.5,LBR Fixed Wireless,Caledonia
+50005,Fidium Fiber,50,2329,2000.0,2000.0,100.0,14875,15.7,Fiber to the Premises,Caledonia
+50005,Xfinity,40,930,1200.0,35.0,100.0,14875,6.3,Cable,Caledonia
+50005,GREEN MOUNTAIN ACCESS,50,901,10000.0,10000.0,100.0,14875,6.1,Fiber to the Premises,Caledonia
+50005,Netafy,70,545,100.0,100.0,100.0,14875,3.7,Unlicensed Fixed Wireless,Caledonia
+50005,Kingdom Fiber,50,462,1000.0,500.0,100.0,14875,3.1,Fiber to the Premises,Caledonia
+50005,Cloud Alliance,72,451,50.0,10.0,0.0,14875,3.0,LBR Fixed Wireless,Caledonia
+50005,Spectrum,50,190,1000.0,1000.0,100.0,14875,1.3,Fiber to the Premises,Caledonia
+50005,ECFiber,50,8,1000.0,1000.0,100.0,14875,0.1,Fiber to the Premises,Caledonia
+50005,Netafy,72,8,350.0,350.0,100.0,14875,0.1,LBR Fixed Wireless,Caledonia
+50005,New England Wireless Co,70,7,25.0,8.0,0.0,14875,0.0,Unlicensed Fixed Wireless,Caledonia
+50007,Viasat Inc,60,49252,100.0,3.0,0.0,49255,100.0,GSO Satellite,Chittenden
+50007,HughesNet,60,49249,100.0,5.0,0.0,49255,100.0,GSO Satellite,Chittenden
+50007,Starlink,61,49226,280.0,30.0,100.0,49255,99.9,NGSO Satellite,Chittenden
+50007,VTel Wireless Inc,71,45603,25.0,3.0,0.0,49255,92.6,Licensed Fixed Wireless,Chittenden
+50007,Xfinity,40,45553,1200.0,35.0,100.0,49255,92.5,Cable,Chittenden
+50007,T-Mobile,71,28357,0.0,0.0,16.0,49255,57.6,Licensed Fixed Wireless,Chittenden
+50007,Consolidated Communications,10,26245,10.0,1.0,1.0,49255,53.3,Copper,Chittenden
+50007,Burlington Telecom,50,18050,1000.0,1000.0,100.0,49255,36.6,Fiber to the Premises,Chittenden
+50007,Verizon,71,16538,25.0,6.0,42.0,49255,33.6,Licensed Fixed Wireless,Chittenden
+50007,AT&T,71,13726,25.0,3.0,6.0,49255,27.9,Licensed Fixed Wireless,Chittenden
+50007,Fidium Fiber,50,10441,2000.0,2000.0,100.0,49255,21.2,Fiber to the Premises,Chittenden
+50007,GREEN MOUNTAIN ACCESS,50,3727,1000.0,1000.0,100.0,49255,7.6,Fiber to the Premises,Chittenden
+50007,GREEN MOUNTAIN ACCESS,10,2471,25.0,3.0,0.0,49255,5.0,Copper,Chittenden
+50007,Mansfield Community Fiber,50,204,1000.0,1000.0,100.0,49255,0.4,Fiber to the Premises,Chittenden
+50007,Xfinity,50,21,1200.0,35.0,100.0,49255,0.0,Fiber to the Premises,Chittenden
+50009,HughesNet,60,4676,100.0,5.0,0.0,4676,100.0,GSO Satellite,Essex
+50009,Starlink,61,4676,280.0,30.0,100.0,4676,100.0,NGSO Satellite,Essex
+50009,Viasat Inc,60,4674,50.0,3.0,0.0,4676,100.0,GSO Satellite,Essex
+50009,VTel Wireless Inc,71,3742,25.0,3.0,0.0,4676,80.0,Licensed Fixed Wireless,Essex
+50009,Consolidated Communications,10,2973,10.0,1.0,3.0,4676,63.6,Copper,Essex
+50009,T-Mobile,71,1933,0.0,0.0,8.0,4676,41.3,Licensed Fixed Wireless,Essex
+50009,NEK Broadband,50,1418,1000.0,1000.0,100.0,4676,30.3,Fiber to the Premises,Essex
+50009,Netafy,70,1103,150.0,150.0,97.0,4676,23.6,Unlicensed Fixed Wireless,Essex
+50009,AT&T,71,575,25.0,3.0,0.0,4676,12.3,Licensed Fixed Wireless,Essex
+50009,Xfinity,40,562,1200.0,35.0,100.0,4676,12.0,Cable,Essex
+50009,"Wireless Partners, LLC",71,465,50.0,10.0,0.0,4676,9.9,Licensed Fixed Wireless,Essex
+50009,Kingdom Fiber,50,401,1000.0,500.0,100.0,4676,8.6,Fiber to the Premises,Essex
+50009,Netafy,72,336,350.0,350.0,92.0,4676,7.2,LBR Fixed Wireless,Essex
+50009,Spectrum,40,277,1000.0,35.0,100.0,4676,5.9,Cable,Essex
+50009,GREEN MOUNTAIN ACCESS,50,262,10000.0,10000.0,100.0,4676,5.6,Fiber to the Premises,Essex
+50009,New England Wireless Co,70,257,100.0,33.0,63.0,4676,5.5,Unlicensed Fixed Wireless,Essex
+50009,Fidium Fiber,50,247,2000.0,2000.0,100.0,4676,5.3,Fiber to the Premises,Essex
+50009,New England Wireless Co,72,162,50.0,16.0,0.0,4676,3.5,LBR Fixed Wireless,Essex
+50009,Phoenix Communications II,70,155,1024.0,1024.0,89.0,4676,3.3,Unlicensed Fixed Wireless,Essex
+50009,NEW Alliance,72,110,25.0,8.0,0.0,4676,2.4,LBR Fixed Wireless,Essex
+50011,Viasat Inc,60,20951,100.0,3.0,0.0,20951,100.0,GSO Satellite,Franklin
+50011,HughesNet,60,20948,100.0,5.0,0.0,20951,100.0,GSO Satellite,Franklin
+50011,Starlink,61,20926,280.0,30.0,100.0,20951,99.9,NGSO Satellite,Franklin
+50011,VTel Wireless Inc,71,19531,25.0,3.0,4.0,20951,93.2,Licensed Fixed Wireless,Franklin
+50011,Xfinity,40,13961,2000.0,250.0,100.0,20951,66.6,Cable,Franklin
+50011,T-Mobile,71,9291,0.0,0.0,12.0,20951,44.3,Licensed Fixed Wireless,Franklin
+50011,Fidium Fiber,50,8321,2000.0,2000.0,100.0,20951,39.7,Fiber to the Premises,Franklin
+50011,Consolidated Communications,10,7671,10.0,1.0,2.0,20951,36.6,Copper,Franklin
+50011,AT&T,71,3464,25.0,3.0,6.0,20951,16.5,Licensed Fixed Wireless,Franklin
+50011,Verizon,71,2534,25.0,6.0,43.0,20951,12.1,Licensed Fixed Wireless,Franklin
+50011,Mansfield Community Fiber,50,1075,1000.0,1000.0,100.0,20951,5.1,Fiber to the Premises,Franklin
+50011,Franklin Telephone Company,10,922,10.0,1.0,0.0,20951,4.4,Copper,Franklin
+50011,Franklin Telephone Company,50,902,200.0,200.0,100.0,20951,4.3,Fiber to the Premises,Franklin
+50011,TDS Telecom,50,4,8000.0,8000.0,100.0,20951,0.0,Fiber to the Premises,Franklin
+50013,Starlink,61,5590,280.0,30.0,100.0,5590,100.0,NGSO Satellite,Grand Isle
+50013,HughesNet,60,5589,100.0,5.0,0.0,5590,100.0,GSO Satellite,Grand Isle
+50013,Viasat Inc,60,5589,100.0,3.0,0.0,5590,100.0,GSO Satellite,Grand Isle
+50013,VTel Wireless Inc,71,5307,25.0,3.0,0.0,5590,94.9,Licensed Fixed Wireless,Grand Isle
+50013,Consolidated Communications,10,3545,10.0,1.0,0.0,5590,63.4,Copper,Grand Isle
+50013,Xfinity,40,3306,2000.0,250.0,100.0,5590,59.1,Cable,Grand Isle
+50013,T-Mobile,71,1530,25.0,3.0,21.0,5590,27.4,Licensed Fixed Wireless,Grand Isle
+50013,AT&T,71,452,25.0,3.0,6.0,5590,8.1,Licensed Fixed Wireless,Grand Isle
+50013,Verizon,71,399,25.0,6.0,37.0,5590,7.1,Licensed Fixed Wireless,Grand Isle
+50013,Fidium Fiber,50,1,2000.0,2000.0,100.0,5590,0.0,Fiber to the Premises,Grand Isle
+50015,Viasat Inc,60,12600,50.0,3.0,0.0,12601,100.0,GSO Satellite,Lamoille
+50015,HughesNet,60,12599,100.0,5.0,0.0,12601,100.0,GSO Satellite,Lamoille
+50015,Starlink,61,12584,280.0,30.0,100.0,12601,99.9,NGSO Satellite,Lamoille
+50015,VTel Wireless Inc,71,11094,25.0,3.0,0.0,12601,88.0,Licensed Fixed Wireless,Lamoille
+50015,Fidium Fiber,50,9678,2000.0,2000.0,100.0,12601,76.8,Fiber to the Premises,Lamoille
+50015,Xfinity,40,4888,1200.0,35.0,100.0,12601,38.8,Cable,Lamoille
+50015,T-Mobile,71,4676,0.0,0.0,18.0,12601,37.1,Licensed Fixed Wireless,Lamoille
+50015,Stowe Communications LLC,50,2961,1000.0,1000.0,100.0,12601,23.5,Fiber to the Premises,Lamoille
+50015,Stowe Communications LLC,40,2473,100.0,20.0,100.0,12601,19.6,Cable,Lamoille
+50015,AT&T,71,1782,25.0,3.0,2.0,12601,14.1,Licensed Fixed Wireless,Lamoille
+50015,New England Wireless Co,70,1358,36.0,12.0,5.0,12601,10.8,Unlicensed Fixed Wireless,Lamoille
+50015,Consolidated Communications,10,1316,10.0,1.0,4.0,12601,10.4,Copper,Lamoille
+50015,Verizon,71,1027,25.0,6.0,32.0,12601,8.2,Licensed Fixed Wireless,Lamoille
+50015,Mansfield Community Fiber,50,412,1000.0,1000.0,100.0,12601,3.3,Fiber to the Premises,Lamoille
+50015,Cloud Alliance,72,205,40.0,8.0,0.0,12601,1.6,LBR Fixed Wireless,Lamoille
+50017,Viasat Inc,60,14533,50.0,3.0,0.0,14534,100.0,GSO Satellite,Orange
+50017,HughesNet,60,14530,100.0,5.0,0.0,14534,100.0,GSO Satellite,Orange
+50017,Starlink,61,14523,280.0,30.0,100.0,14534,99.9,NGSO Satellite,Orange
+50017,VTel Wireless Inc,71,12363,10.0,1.0,5.0,14534,85.1,Licensed Fixed Wireless,Orange
+50017,ECFiber,50,11088,1000.0,1000.0,100.0,14534,76.3,Fiber to the Premises,Orange
+50017,Consolidated Communications,10,9255,10.0,1.0,1.0,14534,63.7,Copper,Orange
+50017,T-Mobile,71,5474,0.0,0.0,13.0,14534,37.7,Licensed Fixed Wireless,Orange
+50017,Spectrum,40,2246,1000.0,35.0,100.0,14534,15.5,Cable,Orange
+50017,Verizon,71,2181,25.0,6.0,41.0,14534,15.0,Licensed Fixed Wireless,Orange
+50017,Xfinity,40,1730,1200.0,35.0,100.0,14534,11.9,Cable,Orange
+50017,AT&T,71,1475,25.0,3.0,0.0,14534,10.1,Licensed Fixed Wireless,Orange
+50017,Topsham Communications,50,1000,300.0,300.0,100.0,14534,6.9,Fiber to the Premises,Orange
+50017,Topsham Telephone Company,50,860,300.0,300.0,100.0,14534,5.9,Fiber to the Premises,Orange
+50017,Topsham Telephone Company,10,814,0.0,0.0,0.0,14534,5.6,Copper,Orange
+50017,Spectrum,50,158,1000.0,1000.0,100.0,14534,1.1,Fiber to the Premises,Orange
+50017,TDS Telecom,10,35,50.0,10.0,0.0,14534,0.2,Copper,Orange
+50017,Fidium Fiber,50,21,2000.0,2000.0,100.0,14534,0.1,Fiber to the Premises,Orange
+50017,NEK Broadband,50,3,1000.0,1000.0,100.0,14534,0.0,Fiber to the Premises,Orange
+50017,Cloud Alliance,72,2,50.0,10.0,0.0,14534,0.0,LBR Fixed Wireless,Orange
+50019,HughesNet,60,15411,100.0,5.0,0.0,15412,100.0,GSO Satellite,Orleans
+50019,Viasat Inc,60,15408,50.0,3.0,0.0,15412,100.0,GSO Satellite,Orleans
+50019,Starlink,61,15389,280.0,30.0,100.0,15412,99.9,NGSO Satellite,Orleans
+50019,VTel Wireless Inc,71,13587,10.0,1.0,0.0,15412,88.2,Licensed Fixed Wireless,Orleans
+50019,Consolidated Communications,10,10606,10.0,1.0,3.0,15412,68.8,Copper,Orleans
+50019,Xfinity,40,7987,1200.0,35.0,100.0,15412,51.8,Cable,Orleans
+50019,T-Mobile,71,6182,0.0,0.0,6.0,15412,40.1,Licensed Fixed Wireless,Orleans
+50019,NEK Broadband,50,2498,1000.0,1000.0,100.0,15412,16.2,Fiber to the Premises,Orleans
+50019,New England Wireless Co,72,1798,37.0,12.0,0.0,15412,11.7,LBR Fixed Wireless,Orleans
+50019,AT&T,71,1681,25.0,3.0,0.0,15412,10.9,Licensed Fixed Wireless,Orleans
+50019,Verizon,71,1036,25.0,6.0,36.0,15412,6.7,Licensed Fixed Wireless,Orleans
+50019,New England Wireless Co,70,956,36.0,12.0,26.0,15412,6.2,Unlicensed Fixed Wireless,Orleans
+50019,Xfinity,50,896,2000.0,2000.0,100.0,15412,5.8,Fiber to the Premises,Orleans
+50019,Kingdom Fiber,50,394,1000.0,500.0,100.0,15412,2.6,Fiber to the Premises,Orleans
+50019,Fidium Fiber,50,356,2000.0,2000.0,100.0,15412,2.3,Fiber to the Premises,Orleans
+50019,Cloud Alliance,72,47,40.0,8.0,0.0,15412,0.3,LBR Fixed Wireless,Orleans
+50019,NEW Alliance,72,5,10.0,1.0,0.0,15412,0.0,LBR Fixed Wireless,Orleans
+50019,Phoenix Communications II,70,2,100.0,100.0,100.0,15412,0.0,Unlicensed Fixed Wireless,Orleans
+50021,HughesNet,60,29257,100.0,5.0,0.0,29257,100.0,GSO Satellite,Rutland
+50021,Viasat Inc,60,29257,50.0,3.0,0.0,29257,100.0,GSO Satellite,Rutland
+50021,Starlink,61,29250,280.0,30.0,100.0,29257,100.0,NGSO Satellite,Rutland
+50021,VTel Wireless Inc,71,25244,25.0,3.0,11.0,29257,86.3,Licensed Fixed Wireless,Rutland
+50021,Xfinity,40,24379,1200.0,35.0,100.0,29257,83.3,Cable,Rutland
+50021,Fidium Fiber,50,17558,2000.0,2000.0,100.0,29257,60.0,Fiber to the Premises,Rutland
+50021,T-Mobile,71,15448,0.0,0.0,18.0,29257,52.8,Licensed Fixed Wireless,Rutland
+50021,Verizon,71,9261,25.0,6.0,49.0,29257,31.7,Licensed Fixed Wireless,Rutland
+50021,AT&T,71,7462,25.0,3.0,2.0,29257,25.5,Licensed Fixed Wireless,Rutland
+50021,Vermont Telephone Company,50,6043,10000.0,10000.0,100.0,29257,20.7,Fiber to the Premises,Rutland
+50021,GoNetspeed,50,1871,1000.0,1000.0,100.0,29257,6.4,Fiber to the Premises,Rutland
+50021,Consolidated Communications,10,1025,10.0,1.0,0.0,29257,3.5,Copper,Rutland
+50021,ECFiber,50,395,1000.0,1000.0,100.0,29257,1.4,Fiber to the Premises,Rutland
+50021,Hudson Valley Wireless,72,82,301.0,172.0,87.0,29257,0.3,LBR Fixed Wireless,Rutland
+50021,GoNetspeed,10,43,10.0,1.0,0.0,29257,0.1,Copper,Rutland
+50021,Spectrum,40,16,1000.0,1000.0,100.0,29257,0.1,Cable,Rutland
+50021,Maple Broadband,50,10,1000.0,1000.0,100.0,29257,0.0,Fiber to the Premises,Rutland
+50021,Vermont Telephone Company,10,8,62.5,3.0,0.0,29257,0.0,Copper,Rutland
+50021,Xfinity,50,7,1200.0,35.0,100.0,29257,0.0,Fiber to the Premises,Rutland
+50021,TDS Telecom,10,3,0.0,0.0,0.0,29257,0.0,Copper,Rutland
+50021,FirstLight Fiber,10,1,10.0,1.0,0.0,29257,0.0,Copper,Rutland
+50023,Viasat Inc,60,25141,50.0,3.0,0.0,25141,100.0,GSO Satellite,Washington
+50023,HughesNet,60,25135,100.0,5.0,0.0,25141,100.0,GSO Satellite,Washington
+50023,Starlink,61,25127,280.0,30.0,100.0,25141,99.9,NGSO Satellite,Washington
+50023,VTel Wireless Inc,71,20171,25.0,3.0,23.0,25141,80.2,Licensed Fixed Wireless,Washington
+50023,T-Mobile,71,14576,25.0,3.0,22.0,25141,58.0,Licensed Fixed Wireless,Washington
+50023,Fidium Fiber,50,9088,2000.0,2000.0,100.0,25141,36.1,Fiber to the Premises,Washington
+50023,Xfinity,40,8159,1200.0,35.0,100.0,25141,32.5,Cable,Washington
+50023,AT&T,71,7250,25.0,3.0,6.0,25141,28.8,Licensed Fixed Wireless,Washington
+50023,Consolidated Communications,10,6798,10.0,1.0,1.0,25141,27.0,Copper,Washington
+50023,Spectrum,40,6664,1000.0,35.0,100.0,25141,26.5,Cable,Washington
+50023,Verizon,71,3759,25.0,6.0,37.0,25141,15.0,Licensed Fixed Wireless,Washington
+50023,GREEN MOUNTAIN ACCESS,50,3280,1000.0,1000.0,100.0,25141,13.0,Fiber to the Premises,Washington
+50023,NEK Broadband,50,2298,1000.0,1000.0,100.0,25141,9.1,Fiber to the Premises,Washington
+50023,TDS Telecom,50,1908,8000.0,8000.0,100.0,25141,7.6,Fiber to the Premises,Washington
+50023,Cloud Alliance,72,1651,50.0,10.0,0.0,25141,6.6,LBR Fixed Wireless,Washington
+50023,Trans-Video,40,1415,500.0,50.0,100.0,25141,5.6,Cable,Washington
+50023,New England Wireless Co,70,1174,50.0,16.0,3.0,25141,4.7,Unlicensed Fixed Wireless,Washington
+50023,Kingdom Fiber,50,362,1000.0,500.0,100.0,25141,1.4,Fiber to the Premises,Washington
+50023,TDS Telecom,10,262,10.0,1.0,0.0,25141,1.0,Copper,Washington
+50023,GREEN MOUNTAIN ACCESS,10,136,25.0,3.0,0.0,25141,0.5,Copper,Washington
+50023,Spectrum,50,87,1000.0,500.0,100.0,25141,0.3,Fiber to the Premises,Washington
+50023,ECFiber,50,71,1000.0,1000.0,100.0,25141,0.3,Fiber to the Premises,Washington
+50023,Xfinity,50,7,1200.0,35.0,100.0,25141,0.0,Fiber to the Premises,Washington
+50023,Phoenix Communications II,70,1,0.0,0.0,0.0,25141,0.0,Unlicensed Fixed Wireless,Washington
+50023,Stowe Communications LLC,50,1,1000.0,1000.0,100.0,25141,0.0,Fiber to the Premises,Washington
+50025,Viasat Inc,60,24617,50.0,3.0,0.0,24617,100.0,GSO Satellite,Windham
+50025,HughesNet,60,24615,100.0,5.0,0.0,24617,100.0,GSO Satellite,Windham
+50025,Starlink,61,24613,280.0,30.0,100.0,24617,100.0,NGSO Satellite,Windham
+50025,VTel Wireless Inc,71,22266,10.0,1.0,6.0,24617,90.4,Licensed Fixed Wireless,Windham
+50025,Xfinity,40,14284,1200.0,35.0,100.0,24617,58.0,Cable,Windham
+50025,T-Mobile,71,11973,0.0,0.0,16.0,24617,48.6,Licensed Fixed Wireless,Windham
+50025,Fidium Fiber,50,11583,2000.0,2000.0,100.0,24617,47.1,Fiber to the Premises,Windham
+50025,Consolidated Communications,10,7219,10.0,1.0,0.0,24617,29.3,Copper,Windham
+50025,Verizon,71,5244,25.0,6.0,44.0,24617,21.3,Licensed Fixed Wireless,Windham
+50025,AT&T,71,3122,25.0,3.0,4.0,24617,12.7,Licensed Fixed Wireless,Windham
+50025,DVFiber,50,1825,1000.0,1000.0,100.0,24617,7.4,Fiber to the Premises,Windham
+50025,Vermont Telephone Company,50,1683,10000.0,10000.0,100.0,24617,6.8,Fiber to the Premises,Windham
+50025,Xfinity,50,312,1200.0,35.0,100.0,24617,1.3,Fiber to the Premises,Windham
+50025,New England Wireless Co,70,155,26.0,9.0,6.0,24617,0.6,Unlicensed Fixed Wireless,Windham
+50025,New England Wireless Co,72,149,0.0,0.0,0.0,24617,0.6,LBR Fixed Wireless,Windham
+50025,Whip City Fiber,50,3,1000.0,1000.0,100.0,24617,0.0,Fiber to the Premises,Windham
+50025,"Wireless Partners, LLC",71,1,50.0,10.0,0.0,24617,0.0,Licensed Fixed Wireless,Windham
+50027,Viasat Inc,60,30240,50.0,3.0,0.0,30240,100.0,GSO Satellite,Windsor
+50027,HughesNet,60,30239,100.0,5.0,0.0,30240,100.0,GSO Satellite,Windsor
+50027,Starlink,61,30239,280.0,30.0,100.0,30240,100.0,NGSO Satellite,Windsor
+50027,VTel Wireless Inc,71,26156,10.0,1.0,2.0,30240,86.5,Licensed Fixed Wireless,Windsor
+50027,Xfinity,40,20368,1200.0,35.0,100.0,30240,67.4,Cable,Windsor
+50027,T-Mobile,71,15020,0.0,0.0,16.0,30240,49.7,Licensed Fixed Wireless,Windsor
+50027,ECFiber,50,13012,1000.0,1000.0,100.0,30240,43.0,Fiber to the Premises,Windsor
+50027,Consolidated Communications,10,9543,10.0,1.0,1.0,30240,31.6,Copper,Windsor
+50027,Vermont Telephone Company,50,8299,10000.0,10000.0,100.0,30240,27.4,Fiber to the Premises,Windsor
+50027,Verizon,71,5155,25.0,6.0,33.0,30240,17.0,Licensed Fixed Wireless,Windsor
+50027,TDS Telecom,50,4101,8000.0,8000.0,100.0,30240,13.6,Fiber to the Premises,Windsor
+50027,Fidium Fiber,50,3322,2000.0,2000.0,100.0,30240,11.0,Fiber to the Premises,Windsor
+50027,AT&T,71,3317,25.0,3.0,0.0,30240,11.0,Licensed Fixed Wireless,Windsor
+50027,Spectrum,40,397,1000.0,35.0,100.0,30240,1.3,Cable,Windsor
+50027,TDS Telecom,10,82,25.0,5.0,0.0,30240,0.3,Copper,Windsor
+50027,Vermont Telephone Company,10,45,25.0,3.0,0.0,30240,0.1,Copper,Windsor
+50027,New England Wireless Co,72,42,0.0,0.0,0.0,30240,0.1,LBR Fixed Wireless,Windsor
+50027,New England Wireless Co,70,2,42.5,13.0,0.0,30240,0.0,Unlicensed Fixed Wireless,Windsor
+50027,FirstLight Fiber,10,1,10.0,1.0,0.0,30240,0.0,Copper,Windsor
