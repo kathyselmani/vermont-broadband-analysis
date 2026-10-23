@@ -114,7 +114,26 @@ Availability counts locations; adoption counts households. The two columns compa
 levels across groups, not the same population. These are ecological associations with
 ACS sampling error, not causal effects.
 
-## 6. Limitations
+## 6. Counties with the greatest need
+
+Equal-weight index of four indicators, each scaled 0 (best county) to 1 (worst):
+service gap, lack of wired choice, households without broadband (ACS) and rurality.
+Full table: `data/processed/analysis/county_need_index.csv`.
+
+| Rank | County | Index | Priority | Below 100/20 | No wired 100/20 | HH without broadband | People / sq mi |
+|---:|---|---:|---|---:|---:|---:|---:|
+| 1 | Essex | 0.92 | High | 44.7% | 47.9% | 13.9% | 9 |
+| 2 | Orleans | 0.59 | Medium | 32.2% | 33.1% | 11.0% | 40 |
+| 3 | Caledonia | 0.57 | Medium | 25.5% | 26.6% | 13.6% | 47 |
+| 4 | Grand Isle | 0.54 | Medium | 39.3% | 40.9% | 7.5% | 91 |
+| 5 | Windham | 0.48 | Medium | 11.1% | 11.9% | 17.6% | 58 |
+| … | | | | | | | |
+| 14 | Chittenden | 0.01 | Low | 2.5% | 2.7% | 6.6% | 316 |
+
+Windham ranks fifth mainly on adoption: service is broadly available, but 17.6% of
+households have no broadband subscription, the highest share in the state.
+
+## 7. Limitations
 
 See [`methodology.md` §7](methodology.md#7-limitations): provider-reported availability,
 0-Mbps records, a residential universe that may include some business-only sites, a

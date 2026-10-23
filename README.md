@@ -5,7 +5,9 @@ have, and how does that line up with income and rurality?
 
 This project combines the **FCC Broadband Data Collection** (all eight fixed technologies,
 data as of December 31, 2025) with **U.S. Census ACS** estimates, and publishes the results
-as an interactive dashboard with a 3D hexagon map.
+as an interactive dashboard: a 3D hexagon map you can filter by measure and county, a
+town-to-county finder for all 256 Vermont towns, a ranking of the counties with the
+greatest need, and the socioeconomic context behind the gaps.
 
 ![Dashboard preview](dashboard/web/preview.png)
 
@@ -51,7 +53,7 @@ src/vermont_broadband_analysis/
   config.py             paths, FCC codes, thresholds
   fcc.py                profile, validate, combine FCC files
   metrics.py            location table and aggregates
-  census.py             ACS + boundary download
+  census.py             ACS and Gazetteer inputs (optional boundary download)
   socioeconomic.py      FCC x ACS join and associations
   places.py             towns, county outlines, county need index
   dashboard_data.py     dashboard data bundle and page
